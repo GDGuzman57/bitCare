@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import ButtonGroup from "./components/DaysButtonGroup";
+import AvailabilityForm from "./components/AvailabilityForm";
 
 class App extends Component {
   constructor(props) {
@@ -8,10 +8,14 @@ class App extends Component {
     this.state = {};
   }
 
+  onSubmit = (a, b, c) => {
+    console.log("Start time: " + b + "\nEnd time: " + c + "\nOn: " + a);
+  };
+
   render() {
     return (
       <div>
-        <ButtonGroup />
+        <AvailabilityForm handleSubmit={this.onSubmit} />
       </div>
     );
   }
