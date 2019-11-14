@@ -49,21 +49,18 @@ class SignUpClientForm extends Component {
               <FullNameForm
                 onChange={this.onChange}
                 firstName={this.state.firstName}
-                lastName={this.state.lastName}
-              />
+                lastName={this.state.lastName} />
             </Form.Row>
 
             <Form.Row>
               <PhoneNumberForm
                 onChange={this.onChange}
-                phoneNumber={this.state.phoneNumber}
-              />
+                phoneNumber={this.state.phoneNumber} />
               <EmailForm onChange={this.onChange} email={this.state.email} />
               <PasswordsForms
                 onChange={this.onChange}
                 passwordOne={this.state.passwordOne}
-                passwordTwo={this.state.passwordTwo}
-              />
+                passwordTwo={this.state.passwordTwo} />
             </Form.Row>
             <hr />
 
@@ -72,8 +69,7 @@ class SignUpClientForm extends Component {
                 onChange={this.onChange}
                 label="Patient Needs"
                 placeholder="Please describe the patient's needs..."
-                name="needsDescription"
-              />
+                name="needsDescription" />
             </Form.Row>
 
             <Form.Row>
@@ -82,8 +78,7 @@ class SignUpClientForm extends Component {
                 email={this.state.needsDescription}
                 label="Medical Condition(s)"
                 placeholder="Please provide the patient's medical conditions..."
-                name="medicalConditions"
-              />
+                  name="medicalConditions" />
             </Form.Row>
 
             <Form.Row>
@@ -92,8 +87,7 @@ class SignUpClientForm extends Component {
                 email={this.state.specialConcerns}
                 label="Special Concerns"
                 placeholder="Please provide us a description of your concerns or the patient's..."
-                name="specialConcerns"
-              />
+                name="specialConcerns" />
             </Form.Row>
 
             <Form.Row className="justify-content-md-center">
