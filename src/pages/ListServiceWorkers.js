@@ -21,7 +21,9 @@ class ListServiceWorkers extends Component {
     return (
       <>
         <h1>OPEN YOUR CONSOLE!</h1>
-        <Button onClick={this.listUsers}>List Workers</Button>
+        <Button onClick={this.props.model.GetFromAwsBucket}>
+          List Workers
+        </Button>
       </>
     );
   }
