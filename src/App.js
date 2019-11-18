@@ -7,6 +7,9 @@ import SignUpClientForm from "./pages/SignUp/ClientForm";
 import { HomePage } from "./pages/homePage";
 import { ServiceWorkerProfile } from "./pages/SignedIn/ServiceWorkerProfile";
 import { ClientProfile } from "./pages/SignedIn/ClientProfile";
+import ListServiceWorkers from "./pages/ListServiceWorkers";
+
+import { Model } from "./models/Model";
 
 class App extends Component {
   constructor(props) {
@@ -27,14 +30,30 @@ class App extends Component {
     console.log("render: From App");
     return (
       <Router>
-          <Switch>
-            <Route exact path="/" render={props => <HomePage {...props} />} />
-            <Route exact path="/signup" render={props => <Paths {...props} />} />
-            <Route exact path="/signup/service_worker" render={props => <SignUpServiceWorkerForm {...props} />} />
-            <Route exact path="/signup/client" render={props => <SignUpClientForm {...props} />}  />
-            <Route exact path="/signin/service_worker-profile" render={props => <ServiceWorkerProfile {...props} />} />
-            <Route exact path="/signin/client-profile" render={props => <ClientProfile {...props} />}  />
-          </Switch>
+        <Switch>
+          <Route exact path="/" render={props => <HomePage {...props} />} />
+          <Route exact path="/signup" render={props => <Paths {...props} />} />
+          <Route
+            exact
+            path="/signup/service_worker"
+            render={props => <SignUpServiceWorkerForm {...props} />}
+          />
+          <Route
+            exact
+            path="/signup/client"
+            render={props => <SignUpClientForm {...props} />}
+          />
+          <Route
+            exact
+            path="/signin/service_worker-profile"
+            render={props => <ServiceWorkerProfile {...props} />}
+          />
+          <Route
+            exact
+            path="/signin/client-profile"
+            render={props => <ClientProfile {...props} />}
+          />
+        </Switch>
       </Router>
     );
   }
