@@ -4,6 +4,9 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import SignUpServiceWorkerForm from "./pages/SignUp/ServiceWorkerForm";
 import Paths from "./pages/SignUp/Paths";
 import SignUpClientForm from "./pages/SignUp/ClientForm";
+import ListServiceWorkers from "./pages/ListServiceWorkers";
+
+import { Model } from "./models/Model";
 
 class App extends Component {
   constructor(props) {
@@ -40,6 +43,11 @@ class App extends Component {
               exact
               path="/signup/client"
               render={props => <SignUpClientForm {...props} />}
+            />
+            <Route
+              exact
+              path="/list"
+              render={props => <ListServiceWorkers model={Model} {...props} />}
             />
           </Switch>
         </div>
