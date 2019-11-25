@@ -1,31 +1,6 @@
 import { observable } from "mobx";
 
-import firebase from "../firebase";
-import "firebase/database";
-
 export const Model = observable({ test: true });
-
-Model.ListUsers = async function() {
-  let users = [];
-
-  firebase
-    .firestore()
-    .collection("users")
-    .get()
-    .then(querySnapshot => {
-      querySnapshot.forEach(doc => users.push(doc.data()));
-    });
-
-  return await users;
-};
-
-Model.CreateUser = function() {
-  let database = firebase.firestore();
-  database
-    .collection("users")
-    .doc()
-    .set({ email: "sample5@email.com" });
-};
 
 Model.GetFromAwsBucket = async function() {
   try {

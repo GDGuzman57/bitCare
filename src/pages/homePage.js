@@ -23,9 +23,9 @@ export class HomePage extends Component
     }
     
     gotToProfilePage = (userType) => {
-        if (userType == "ServiceWorker")
+        if (userType === "ServiceWorker")
             this.props.history.push("/signin/service_worker-profile");
-        else if (userType == "Client")
+        else if (userType === "Client")
             this.props.history.push("/signin/client-profile");
         else
             console.log("User has not logged in/incorrect log in");

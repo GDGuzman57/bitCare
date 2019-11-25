@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-
 import SignUpServiceWorkerForm from "./pages/SignUp/ServiceWorkerForm";
 import Paths from "./pages/SignUp/Paths";
 import SignUpClientForm from "./pages/SignUp/ClientForm";
@@ -8,8 +7,6 @@ import { HomePage } from "./pages/homePage";
 import { ServiceWorkerProfile } from "./pages/SignedIn/ServiceWorkerProfile";
 import { ClientProfile } from "./pages/SignedIn/ClientProfile";
 import ListServiceWorkers from "./pages/ListServiceWorkers";
-
-import { Model } from "./models/Model";
 
 class App extends Component {
   constructor(props) {
@@ -52,6 +49,11 @@ class App extends Component {
             exact
             path="/signin/client-profile"
             render={props => <ClientProfile {...props} />}
+          />
+          <Route 
+          exact 
+          path="/list"
+          render={props => <ListServiceWorkers model={this.props.model} {...props} />}
           />
         </Switch>
       </Router>
