@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
 
+//BasicButton component requires one object pass to props.
+//this.props.buttonStuff = {buttonName : 'a string', 
+//                          buttonFunction : 'a function'}
+//Returns a single button element.
 export class BasicButton extends Component
 {
     constructor(props) {

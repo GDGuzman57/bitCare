@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import Button from "react-bootstrap/Button";
+import { WorkerCard } from '../components/workerCard.js';
 
 class ListServiceWorkers extends Component {
   constructor(props) {
     super(props);
-
-    this.state = {};
+    this.state = { workerCardList : null };
   }
 
   listUsers = async () => {
@@ -14,8 +14,27 @@ class ListServiceWorkers extends Component {
       startTime: "14:00:00",
       endTime: "15:00:00"
     };
-    if (this.props.model.List) this.props.model.List(availabilityBlock);
+    let workersReturned;
+    if (this.props.model.List) 
+    {
+      workersReturned = await this.props.model.List(availabilityBlock);
+      this.setState({workerCardList: this.CreateWorkerCard(workersReturned)});
+    }
   };
+  listUsers2 = async () => {
+    const availabilityBlock = {
+      day: undefined,
+      startTime: undefined,
+      endTime: undefined
+    };
+    let workersReturned;
+    if (this.props.model.List) 
+    {
+      workersReturned = await this.props.model.List(undefined/*null*/);
+      this.setState({workerCardList: this.CreateWorkerCard(workersReturned)});
+    }
+  };
+  
 
   createUser = async () => {
     const user = {
@@ -39,6 +58,12 @@ class ListServiceWorkers extends Component {
   //     this.props.model.DeleteUser("email3@email.ca");
   // };
 
+  CreateWorkerCard = (workers) => {
+    let cardList = null;
+    cardList = workers.map((aWorker, indexKey) => <WorkerCard worker={aWorker} key={indexKey} />);
+    return cardList;
+  }
+
   render() {
     return (
       <>
@@ -50,6 +75,9 @@ class ListServiceWorkers extends Component {
         <Button className="mr-2" onClick={this.listUsers}>
           List Users
         </Button>
+        <Button className="mr-2" onClick={this.listUsers2}>
+          List Users2 (different search critea-remove later)
+        </Button>
         <br />
         <h2 className="mt-5">Other test buttons</h2>
         <Button
@@ -58,6 +86,8 @@ class ListServiceWorkers extends Component {
         >
           Get Seconds
         </Button>
+        
+        {this.state.workerCardList}
       </>
     );
   }
