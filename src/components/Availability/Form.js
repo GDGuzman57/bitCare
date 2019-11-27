@@ -46,10 +46,10 @@ class AvailabilityForm extends Component {
     console.log(e.target.value);
     this.setState({ day: e.target.value });
 
-    console.log("BUTTON TOGGLED! ", this.state.day);
+    // console.log("BUTTON TOGGLED! ", this.state.day);
   };
 
-  onAdd = e => {
+  onSubmit = e => {
     e.preventDefault();
 
     const { day, startTime, endTime } = this.state;
@@ -66,6 +66,14 @@ class AvailabilityForm extends Component {
           }
         ]);
       }
+    } else if (this.props.onGetBlock) {
+      const block = {
+        day: this.state.day,
+        startTime: this.state.startTime,
+        endTime: this.state.endTime
+      };
+
+      this.props.onGetBlock(block);
     }
 
     console.log("ADD BUTTON CLICKED");
@@ -155,19 +163,23 @@ class AvailabilityForm extends Component {
               <Button
                 variant="success"
                 type="submit"
-                onClick={this.onAdd}
+                onClick={this.onSubmit}
                 size="sm"
                 className="mb-2 float-right"
               >
-                Add
+                {this.props.buttonText}
               </Button>
             </Col>
           </Form.Row>
-          <Form.Row>
-            <Col>
-              <AvailabilityTable list={this.getList} />
-            </Col>
-          </Form.Row>
+          {this.props.includeTable ? (
+            <Form.Row>
+              <Col>
+                <AvailabilityTable list={this.getList} />
+              </Col>
+            </Form.Row>
+          ) : (
+            <br />
+          )}
         </Container>
       </>
     );
