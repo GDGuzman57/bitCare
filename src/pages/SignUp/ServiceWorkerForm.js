@@ -90,6 +90,8 @@ class SignUpServiceWorkerForm extends Component {
           <AvailabilityForm
             handleSubmit={this.onAvailabilitySubmit}
             list={this.getList}
+            includeTable={true}
+            buttonText="Add"
           />
 
           <Form.Row className="justify-content-md-center">

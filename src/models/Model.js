@@ -55,7 +55,7 @@ Model.List = async function(availabilityBlock = undefined) {
     // Assigns a deep copy of the fetched data to 'users'.
     users = JSON.parse(JSON.stringify(data));
 
-    // If no object was passed as an argument, list all users.
+    // If no arguments were passed, list all users.
     if (availabilityBlock !== undefined) {
       const startTime = this.TimeToSeconds(availabilityBlock.startTime);
       const endTime = this.TimeToSeconds(availabilityBlock.endTime);
@@ -223,4 +223,3 @@ Model.DeleteUser = async function(email) {
     console.log(e);
   }
 };
-

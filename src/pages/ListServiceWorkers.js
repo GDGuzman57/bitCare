@@ -1,12 +1,32 @@
 import React, { Component } from "react";
 import Button from "react-bootstrap/Button";
-import { WorkerCard } from '../components/workerCard.js';
+import { WorkerCard } from "../components/workerCard.js";
+import AvailabilityForm from "../components/Availability/Form";
 
 class ListServiceWorkers extends Component {
   constructor(props) {
     super(props);
-    this.state = { workerCardList : null };
+    this.state = { workerCardList: null, availabilityBlock: undefined };
   }
+
+  // Fishes out an object from the AvailabilityForm component which contains
+  // the day, start time, and end time for a service worker.
+  onSubmit = async value => {
+    console.log(value);
+    await this.setState({ availabilityBlock: value });
+    console.log(this.state.availabilityBlock);
+
+    let workersReturned;
+    if (this.props.model.List) {
+      workersReturned = await this.props.model.List(
+        this.state.availabilityBlock
+      );
+
+      await this.setState({
+        workerCardList: this.CreateWorkerCard(workersReturned)
+      });
+    }
+  };
 
   listUsers = async () => {
     const availabilityBlock = {
@@ -14,11 +34,14 @@ class ListServiceWorkers extends Component {
       startTime: "14:00:00",
       endTime: "15:00:00"
     };
+
     let workersReturned;
-    if (this.props.model.List) 
-    {
-      workersReturned = await this.props.model.List(availabilityBlock);
-      this.setState({workerCardList: this.CreateWorkerCard(workersReturned)});
+    if (this.props.model.List) {
+      workersReturned = await this.props.model.List(
+        this.state.availabilityBlock
+      );
+
+      this.setState({ workerCardList: this.CreateWorkerCard(workersReturned) });
     }
   };
   listUsers2 = async () => {
@@ -28,13 +51,11 @@ class ListServiceWorkers extends Component {
       endTime: undefined
     };
     let workersReturned;
-    if (this.props.model.List) 
-    {
-      workersReturned = await this.props.model.List(undefined/*null*/);
-      this.setState({workerCardList: this.CreateWorkerCard(workersReturned)});
+    if (this.props.model.List) {
+      workersReturned = await this.props.model.List(undefined /*null*/);
+      this.setState({ workerCardList: this.CreateWorkerCard(workersReturned) });
     }
   };
-  
 
   createUser = async () => {
     const user = {
@@ -58,21 +79,24 @@ class ListServiceWorkers extends Component {
   //     this.props.model.DeleteUser("email3@email.ca");
   // };
 
-  CreateWorkerCard = (workers) => {
+  CreateWorkerCard = workers => {
     let cardList = null;
-    cardList = workers.map((aWorker, indexKey) => <WorkerCard worker={aWorker} key={indexKey} />);
+    cardList = workers.map((aWorker, indexKey) => (
+      <WorkerCard worker={aWorker} key={indexKey} />
+    ));
     return cardList;
-  }
+  };
 
   render() {
     return (
       <>
         <h1>OPEN YOUR CONSOLE!</h1>
+        <AvailabilityForm buttonText="Filter" onGetBlock={this.onSubmit} />
         <h2>AWS test buttons</h2>
         <Button className="mr-2" onClick={this.createUser}>
           Put
         </Button>
-        <Button className="mr-2" onClick={this.listUsers}>
+        <Button className="mr-2" onClick={this.onSubmit}>
           List Users
         </Button>
         <Button className="mr-2" onClick={this.listUsers2}>
@@ -86,7 +110,7 @@ class ListServiceWorkers extends Component {
         >
           Get Seconds
         </Button>
-        
+
         {this.state.workerCardList}
       </>
     );
