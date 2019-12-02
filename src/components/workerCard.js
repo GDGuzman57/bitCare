@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import Availability from '../components/Availability/Form.js'
-import { BasicButton } from '../components/basicButton.js'
+import { BasicButton } from '../components/basicButton.js';
+import { TimeTable } from '../components/TimeTable.js';
 
 export class WorkerCard extends Component
 {
@@ -22,8 +22,7 @@ export class WorkerCard extends Component
 {/*Not sure if to include the aboutMe. Is for profile page?*/}
                 {/*<div>{this.props.worker.aboutMe}</div>*/}
 
-{/*Availability needs to be implemented*/}
-                {/*<Availability list={this.props.worker.availability} />*/}
+                <TimeTable times={this.props.worker.availability} />
 
                 <BasicButton buttonStuff={this.state.buttonData} />
             </div>
