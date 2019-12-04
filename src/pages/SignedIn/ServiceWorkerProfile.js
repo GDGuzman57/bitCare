@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { TimeTable } from "../../components/TimeTable";
 
 export class ServiceWorkerProfile extends Component {
   constructor(props) {
@@ -64,7 +65,7 @@ export class ServiceWorkerProfile extends Component {
         <p>{phoneNumber}</p>
 
         <h2>Availability</h2>
-        <p>**Jaryd's component**</p>
+        <TimeTable times={availability} />
       </div>
     );
   }
