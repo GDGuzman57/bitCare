@@ -1,12 +1,78 @@
 import { observable } from "mobx";
-
-/*
-TODO:
-- create models for service workers and clients.
-*/
+import uuid from "uuid"; // Generates a seemingly random id. Used for user sign ups.
 
 export const Model = observable({ test: true });
 
+Model.Logout = function() {
+  try {
+    // Clears all items in the session storage.
+    sessionStorage.clear();
+  } catch (e) {
+    console.log("[Login] Exception! e -->");
+    console.log(e);
+  }
+};
+
+//
+// Login function that creates a items in the browser's session storage.
+Model.Login = async function(email, password) {
+  let fetchData, reply, data;
+
+  try {
+    const Endpoint =
+      "https://bvc-vincibucket.s3.ca-central-1.amazonaws.com/mydata.json";
+
+    fetchData = {
+      method: "GET",
+      mode: "cors",
+      cache: "no-cache",
+      credentials: "omit",
+      headers: {
+        "Content-Type": "application/json",
+        "x-amz-date": new Date().toUTCString(),
+        "x-amz-acl": "public-read"
+      }
+    };
+
+    reply = await fetch(Endpoint, fetchData);
+    data = await reply.json();
+
+    //
+    // Returns true if email and password are valid. Store's the users "id", "isServiceWorker", and "isLoggedIn" values
+    // as session storage items.
+    const isUser = await data.some(user => {
+      if (user.email === email && user.password === password) {
+        console.log("From Model: login successful!");
+
+        // Creates an "id" item in browser's session storage. Value is equal to matched user's id.
+        sessionStorage.setItem("id", user.id);
+
+        // Creates an "isServiceWorker" item in brower's session storage. Value is "true" if user is a
+        // service worker. Value is "false" if user is a client.
+        sessionStorage.setItem(
+          "isServiceWorker",
+          user.isServiceWorker.toString() // Converts boolean value to string. A browser's session storage CAN ONLY store strings.
+        );
+
+        // Creates an "isLoggedIn" item in browser's session storage. Value is set to "true" if user's email
+        // and password are valid.
+        sessionStorage.setItem("isLoggedIn", true.toString());
+
+        return true;
+      } else {
+        console.log("From Model: login failed!");
+        return false;
+      }
+    });
+
+    return isUser ? true : false;
+  } catch (e) {
+    console.log("[Login] Exception! e -->");
+    console.log(e);
+  }
+};
+
+//
 // Converts a time string (24-hour format) to its equivalent value in seconds.
 // You can use the output of this method to check if one the worker's time blocks
 // are greater than or equal to a client's search criteria.
@@ -18,6 +84,48 @@ Model.TimeToSeconds = function(time) {
   let seconds = +array[0] * 60 * 60 + +array[1] * 60 + +array[2];
 
   return seconds;
+};
+
+//
+// Returns a user object with an id that matches to the passed argument.
+Model.FindOne = async function(userId) {
+  let fetchData, reply, data, userObject;
+
+  try {
+    const Endpoint =
+      "https://bvc-vincibucket.s3.ca-central-1.amazonaws.com/mydata.json";
+
+    fetchData = {
+      method: "GET",
+      mode: "cors",
+      cache: "no-cache",
+      credentials: "omit",
+      headers: {
+        "Content-Type": "application/json",
+        "x-amz-date": new Date().toUTCString(),
+        "x-amz-acl": "public-read"
+      }
+    };
+
+    reply = await fetch(Endpoint, fetchData);
+    data = await reply.json();
+
+    //
+    // Finds an object with a similar id to userId argument.
+    // If you are comparing to a value in a session storage, you must
+    // convert the id of each user to a string in order to for them to be comparable.
+    // Values in web storages (session, local) can only be strings. If you don't convert
+    // the user's id to a string, you would be comparing a number type (user's id) to a string type (storage item).
+    // You can also convert userId argument to a number value to be comparable, either works :)
+    await data.forEach(user => {
+      if (user.id.toString() === userId) userObject = user;
+    });
+
+    return userObject;
+  } catch (e) {
+    console.log("[FindOne] Exception! e -->");
+    console.log(e);
+  }
 };
 
 // ATTENTION: availabilityBlock must be passed an OBJECT as an argument! Below is the schema.
