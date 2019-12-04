@@ -1,5 +1,5 @@
 .timeTable {
-    width: 50%;
+    width: fit-content;
     border: solid;
     display: grid;
     grid-template-columns:
@@ -52,11 +52,13 @@
 .timesBlock {
     grid-column: Times;
     border-right: solid;
+    font-size: 2vw;
 }
 .daysBlock {
     grid-column: auto;
     grid-row: 1;
     border-bottom: solid;
+    font-size: 2vw;
 }
 .chosenBlock {
     background-color: blueviolet;
@@ -66,7 +68,7 @@
     overflow: hidden;
     font-size: smaller;
     position: absolute;
-    font-size: 80%;
+    font-size: 1.5vw;
 }
 
 

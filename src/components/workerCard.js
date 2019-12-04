@@ -2,6 +2,20 @@ import React, { Component } from 'react';
 import { BasicButton } from '../components/basicButton.js';
 import { TimeTable } from '../components/TimeTable.js';
 
+//Takes an object into the -worker- prop.
+//Comes from the array returned from Model.List()
+/*  worker: {  firstName: "",
+      lastName: "",
+      email: "",
+      password: "",
+      phoneNumber: "",
+      aboutMe: "",
+      availability: [{
+          day:"",
+          start:"",
+          end:""
+      }] }
+*/
 export class WorkerCard extends Component
 {
     constructor(props) {
