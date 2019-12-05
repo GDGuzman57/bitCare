@@ -19,7 +19,7 @@ class ListServiceWorkers extends Component {
     let workersReturned;
     if (this.props.model.List) {
       workersReturned = await this.props.model.List(
-        undefined//this.state.availabilityBlock
+        undefined //this.state.availabilityBlock
       );
       await this.setState({
         workerCardList: this.CreateWorkerCard(workersReturned)
