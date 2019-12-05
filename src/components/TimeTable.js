@@ -2,6 +2,16 @@ import React, { Component } from 'react';
 import { TimeTableDay } from './TimeTableDay.js';
 import '../TheBlock.css';
 
+//Takes an array of objects into the -times- prop.
+//Comes from the Model.List() returned array[x].availability
+/*
+    times: [
+        {   day: "Monday", 
+            start: "00:00:00", 
+            end: "00:00:00" 
+        }
+    ]
+*/
 export class TimeTable extends Component
 {
 
