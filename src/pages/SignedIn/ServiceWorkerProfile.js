@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { TimeTable } from "../../components/TimeTable";
 
 export class ServiceWorkerProfile extends Component {
   constructor(props) {
@@ -6,7 +7,6 @@ export class ServiceWorkerProfile extends Component {
     this.state = {
       firstName: "",
       lastName: "",
-      fullName: "",
       aboutMe: "",
       email: "",
       phoneNumber: "",
@@ -21,7 +21,6 @@ export class ServiceWorkerProfile extends Component {
     this.setState({
       firstName: user.firstName,
       lastName: user.lastName,
-      fullName: `${user.firstName} ${user.lastName}`,
       aboutMe: user.aboutMe,
       email: user.email,
       phoneNumber: user.phoneNumber
@@ -42,17 +41,20 @@ export class ServiceWorkerProfile extends Component {
     }
   };
 
-  userInfo = async () => {
-    const user = await this.getUser();
-    console.log(user.firstName);
-    return user.firstName;
-  };
-
   render() {
-    const { fullName, aboutMe, email, phoneNumber, availability } = this.state;
+    const {
+      firstName,
+      lastName,
+      aboutMe,
+      email,
+      phoneNumber,
+      availability
+    } = this.state;
     return (
       <div>
-        <h1>{fullName} **checkmark img** User is certified</h1>
+        <h1>
+          {firstName} {lastName} **checkmark img** User is certified
+        </h1>
 
         <h2>About Me</h2>
         <p>{aboutMe}</p>
@@ -64,7 +66,7 @@ export class ServiceWorkerProfile extends Component {
         <p>{phoneNumber}</p>
 
         <h2>Availability</h2>
-        <p>**Jaryd's component**</p>
+        <TimeTable times={availability} />
       </div>
     );
   }
