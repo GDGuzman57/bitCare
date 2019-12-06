@@ -12,19 +12,7 @@ class AvailabilityTable extends Component {
     this.state = {};
   }
 
-  // getList = () => {
-  //   if (this.props.list) {
-  //     return this.props.list();
-  //   }
-  // };
-
-  componentDidMount() {
-    console.log("cdm: from AvailabilityTable");
-  }
-
   render() {
-    console.log("render: from AvailabilityTable");
-    console.log("render: from AvailabilityTable", this.props.list());
     return (
       <Container>
         <Table responsive>
@@ -43,5 +31,4 @@ class AvailabilityTable extends Component {
     );
   }
 }
-
 export default AvailabilityTable;

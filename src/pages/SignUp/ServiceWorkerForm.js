@@ -34,10 +34,6 @@ class SignUpServiceWorkerForm extends Component {
     };
   }
 
-  componentDidMount() {
-    console.log("cdm: from SignUpServiceWorkerForm");
-  }
-
   //
   // CALLBACK FUNCTIONS
   //
@@ -48,8 +44,6 @@ class SignUpServiceWorkerForm extends Component {
     this.setState({
       availability: availabilityList // FIXME: check for duplicate time blocks.
     });
-
-    console.log("From SignUpServiceWorkerForm: ", value);
   };
 
   getList = () => {
@@ -63,8 +57,6 @@ class SignUpServiceWorkerForm extends Component {
   };
 
   render() {
-    console.log("List from SignUpServiceWorkerForm: ", this.getList());
-    console.log("render: From SignUpServiceWorkerForm");
     return (
       <Container className="border border-dark w-100 rounded-sm">
         <Form className="mt-3">
@@ -102,5 +94,4 @@ class SignUpServiceWorkerForm extends Component {
     );
   }
 }
-
 export default SignUpServiceWorkerForm;

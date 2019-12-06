@@ -26,10 +26,6 @@ class AvailabilityForm extends Component {
     };
   }
 
-  componentDidMount() {
-    console.log("cdm: from AvailabilityForm");
-  }
-
   getList = () => {
     if (this.props.list) {
       return this.props.list();
@@ -43,10 +39,7 @@ class AvailabilityForm extends Component {
   };
 
   onClickDay = e => {
-    console.log(e.target.value);
     this.setState({ day: e.target.value });
-
-    // console.log("BUTTON TOGGLED! ", this.state.day);
   };
 
   onSubmit = e => {
@@ -66,7 +59,8 @@ class AvailabilityForm extends Component {
           }
         ]);
       }
-    } else if (this.props.onGetBlock) {
+    } 
+    else if (this.props.onGetBlock) {
       const block = {
         day: this.state.day,
         startTime: this.state.startTime,
@@ -75,8 +69,6 @@ class AvailabilityForm extends Component {
 
       this.props.onGetBlock(block);
     }
-
-    console.log("ADD BUTTON CLICKED");
   };
 
   toggleButtons = () => {
@@ -92,11 +84,10 @@ class AvailabilityForm extends Component {
 
     const checkboxes = days.map((item, index) => {
       return (
-        <ButtonGroup toggle className="mr-2 mt-1">
+        <ButtonGroup toggle className="mr-2 mt-1" key={index}>
           <ToggleButton
             name="day"
             variant="primary"
-            key={index}
             value={item}
             type="radio"
             onClick={this.onClickDay}
@@ -112,7 +103,6 @@ class AvailabilityForm extends Component {
   };
 
   render() {
-    console.log("render: from AvailabilityForm", this.state);
     return (
       <>
         <Container className="border border-dark w-100 rounded-sm mt-4">
