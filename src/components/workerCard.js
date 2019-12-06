@@ -33,8 +33,6 @@ export class WorkerCard extends Component
             <div>
                 <div>Name: {this.props.worker.firstName} {this.props.worker.lastName}</div>
                 <div>Email: {this.props.worker.email}</div>
-{/*Not sure if to include the aboutMe. Is for profile page?*/}
-                {/*<div>{this.props.worker.aboutMe}</div>*/}
 
                 <TimeTable times={this.props.worker.availability} />
 

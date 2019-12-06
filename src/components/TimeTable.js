@@ -17,10 +17,12 @@ export class TimeTable extends Component
     displayTimeBlocks = () => {
        let availableTimeBlocks = null;
 
-       availableTimeBlocks = this.props.times.map(( block, index) => {
-           return <TimeTableBlock day={block.day} beginning={block.start} ending={block.end} key={index} />
-        })
-
+       if (this.props.times)
+       {
+            availableTimeBlocks = this.props.times.map(( block, index) => {
+               return <TimeTableBlock day={block.day} beginning={block.start} ending={block.end} key={index} />
+            })
+        }
         return availableTimeBlocks;
     }
 
