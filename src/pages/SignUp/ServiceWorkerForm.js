@@ -11,6 +11,8 @@ import Form from "react-bootstrap/Form";
 import Container from "react-bootstrap/Container";
 import PasswordsForms from "../../components/SignUpForms/PasswordsForms";
 
+import uuid from "uuid"; // Generates a seemingly random id. Used for user sign ups.
+
 /* 
 TODO: 
 - add DOB form
@@ -21,21 +23,18 @@ class SignUpServiceWorkerForm extends Component {
     super(props);
 
     this.state = {
+      id: uuid(), // Generates a unique, random id for the user.
       firstName: "",
       lastName: "",
       email: "",
+      isServiceWorker: true,
       phoneNumber: "",
-      passwordOne: "",
-      passwordTwo: "",
+      password: "",
+      passwordConfirm: "",
       aboutMe: "",
       availability: [],
-      firstAidCert: null,
-      proofOfPoliceCheck: null
+      isCertified: null
     };
-  }
-
-  componentDidMount() {
-    console.log("cdm: from SignUpServiceWorkerForm");
   }
 
   //
@@ -59,7 +58,38 @@ class SignUpServiceWorkerForm extends Component {
   onChange = e => this.setState({ [e.target.name]: e.target.value });
 
   onFormSubmit = e => {
-    console.log(this.state);
+    const {
+      id,
+      firstName,
+      lastName,
+      isServiceWorker,
+      email,
+      passwordOne,
+      phoneNumber,
+      aboutMe,
+      availability
+    } = this.state;
+
+    //
+    // The reason why I created a new object is to exclude "passwordTwo" in the
+    // creation of a new user. The "passwordTwo" property is only used to confirm
+    // that both "passwordOne" and "passwordTwo" are the same.
+    const user = {
+      id: id,
+      firstName: firstName,
+      lastName: lastName,
+      isServiceWorker: isServiceWorker,
+      email: email,
+      password: passwordOne,
+      phoneNumber: phoneNumber,
+      aboutMe: aboutMe,
+      availability: availability,
+      isCertified: true
+    };
+
+    //
+    // Invokes the model's CreateUser function.
+    if (this.props.model.CreateUser) this.props.model.CreateUser(user);
   };
 
   render() {
@@ -95,7 +125,7 @@ class SignUpServiceWorkerForm extends Component {
           />
 
           <Form.Row className="justify-content-md-center">
-            <SubmitButton onClick={this.onFormSubmit} />
+            <SubmitButton onClick={this.onFormSubmit} text={"Register"} />
           </Form.Row>
         </Form>
       </Container>
