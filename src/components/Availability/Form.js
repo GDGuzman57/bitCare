@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 
+import uuid from "uuid"; // Generates a seemingly random id. Used for user sign ups.
+
 import AvailabilityTable from "./Table";
 
 import Button from "react-bootstrap/Button";
@@ -10,10 +12,7 @@ import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import FormControl from "react-bootstrap/FormControl";
 import InputGroup from "react-bootstrap/InputGroup";
-
-/*
-TODO:
-*/
+import ToggleButtonGroup from "react-bootstrap/ToggleButtonGroup";
 
 class AvailabilityForm extends Component {
   constructor(props) {
@@ -21,13 +20,9 @@ class AvailabilityForm extends Component {
 
     this.state = {
       day: "",
-      startTime: "08:00:00",
-      endTime: "10:00:00"
+      start: "08:00:00",
+      end: "10:00:00"
     };
-  }
-
-  componentDidMount() {
-    console.log("cdm: from AvailabilityForm");
   }
 
   getList = () => {
@@ -52,25 +47,27 @@ class AvailabilityForm extends Component {
   onSubmit = e => {
     e.preventDefault();
 
-    const { day, startTime, endTime } = this.state;
+    const { day, start, end } = this.state;
 
-    const isInvalid = startTime !== "" && endTime !== "" && day !== "";
+    const isInvalid = start !== "" && end !== "" && day !== "";
 
     if (this.props.handleSubmit) {
       if (isInvalid) {
         this.props.handleSubmit([
           {
+            blockId: uuid(),
             day: day,
-            startTime: startTime,
-            endTime: endTime
+            start: start,
+            end: end
           }
         ]);
       }
     } else if (this.props.onGetBlock) {
       const block = {
+        blockId: uuid(),
         day: this.state.day,
-        startTime: this.state.startTime,
-        endTime: this.state.endTime
+        start: this.state.start,
+        end: this.state.end
       };
 
       this.props.onGetBlock(block);
@@ -92,7 +89,7 @@ class AvailabilityForm extends Component {
 
     const checkboxes = days.map((item, index) => {
       return (
-        <ButtonGroup toggle className="mr-2 mt-1">
+        <ButtonGroup key={index} toggle className="mr-2 mt-1">
           <ToggleButton
             name="day"
             variant="primary"
@@ -132,11 +129,11 @@ class AvailabilityForm extends Component {
                 </InputGroup.Prepend>
 
                 <FormControl
-                  name="startTime"
+                  name="start"
                   onChange={this.onChange}
                   className="form-control"
                   type="time"
-                  value={this.state.startTime}
+                  value={this.state.start}
                 />
               </InputGroup>
             </Form.Group>
@@ -149,11 +146,11 @@ class AvailabilityForm extends Component {
                   </InputGroup.Text>
                 </InputGroup.Prepend>
                 <FormControl
-                  name="endTime"
+                  name="end"
                   onChange={this.onChange}
                   className="form-control"
                   type="time"
-                  value={this.state.endTime}
+                  value={this.state.end}
                 />
               </InputGroup>
             </Form.Group>
@@ -171,10 +168,14 @@ class AvailabilityForm extends Component {
               </Button>
             </Col>
           </Form.Row>
-          {this.props.includeTable ? (
+          {// Renders a table if "true" was passed to the prop "includeTable".
+          this.props.includeTable ? (
             <Form.Row>
               <Col>
-                <AvailabilityTable list={this.getList} />
+                <AvailabilityTable
+                  list={this.getList}
+                  handleDelete={this.props.handleDelete}
+                />
               </Col>
             </Form.Row>
           ) : (

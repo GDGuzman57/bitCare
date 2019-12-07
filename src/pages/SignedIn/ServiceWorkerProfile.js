@@ -1,4 +1,7 @@
 import React, { Component } from "react";
+
+import Button from "react-bootstrap/Button";
+
 import { TimeTable } from "../../components/TimeTable";
 
 export class ServiceWorkerProfile extends Component {
@@ -29,16 +32,17 @@ export class ServiceWorkerProfile extends Component {
     user.availability.forEach(block =>
       this.setState({ availability: this.state.availability.concat(block) })
     );
-
-    console.log(this.state);
   }
 
   getUser = async () => {
     if (this.props.model.FindOne) {
       const user = await this.props.model.FindOne(sessionStorage.getItem("id"));
-      console.log(user);
       return user;
     }
+  };
+
+  onEditProfile = () => {
+    this.props.history.push("/signin/service_worker-profile/edit");
   };
 
   render() {
@@ -55,7 +59,7 @@ export class ServiceWorkerProfile extends Component {
         <h1>
           {firstName} {lastName} **checkmark img** User is certified
         </h1>
-
+        <Button onClick={this.onEditProfile}>Edit</Button>
         <h2>About Me</h2>
         <p>{aboutMe}</p>
 

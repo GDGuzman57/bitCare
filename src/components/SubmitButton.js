@@ -22,7 +22,7 @@ class SubmitButton extends Component {
           type="submit"
           onClick={this.props.onClick}
         >
-          Submit
+          {this.props.text}
         </Button>
       </>
     );

@@ -3,6 +3,66 @@ import uuid from "uuid"; // Generates a seemingly random id. Used for user sign 
 
 export const Model = observable({ test: true });
 
+//
+// Updates a user's properties by taking in an object as an argument. You must first use the
+// FindOne method to fetch a user object.
+Model.UpdateUser = async function(userObject) {
+  let fetchData, putData, reply, data, users;
+
+  try {
+    const Endpoint =
+      "https://bvc-vincibucket.s3.ca-central-1.amazonaws.com/mydata.json";
+
+    fetchData = {
+      method: "GET",
+      mode: "cors",
+      cache: "no-cache",
+      credentials: "omit",
+      headers: {
+        "Content-Type": "application/json",
+        "x-amz-date": new Date().toUTCString(),
+        "x-amz-acl": "public-read"
+      }
+    };
+
+    reply = await fetch(Endpoint, fetchData);
+    data = await reply.json();
+
+    users = JSON.parse(JSON.stringify(data));
+
+    //
+    // Finds an object with a similar id to the object that was passed as an argument.
+    // Replaces matched object with the updated object that was passed as an arugment.
+    users.forEach((user, index) => {
+      if (user.id === userObject.id) users.splice(index, 1, userObject);
+    });
+
+    const ObjectToStoreInJSON = JSON.stringify(users);
+
+    // Make a PUT request to update AWS bucket object.
+    putData = {
+      method: "PUT",
+      mode: "cors",
+      cache: "no-cache",
+      credentials: "omit",
+      headers: {
+        "Content-Type": "application/json",
+        "x-amz-date": new Date().toUTCString(),
+        "x-amz-acl": "public-read"
+      },
+      body: ObjectToStoreInJSON
+    };
+
+    const PutReply = await fetch(Endpoint, putData);
+
+    // Should return true if request was successful.
+    return PutReply && PutReply.status === 200;
+  } catch (e) {
+    console.log("[UpdateUser] Exception! e -->");
+    console.log(e);
+  }
+};
+
 Model.Logout = function() {
   try {
     // Clears all items in the session storage.
@@ -112,13 +172,8 @@ Model.FindOne = async function(userId) {
 
     //
     // Finds an object with a similar id to userId argument.
-    // If you are comparing to a value in a session storage, you must
-    // convert the id of each user to a string in order to for them to be comparable.
-    // Values in web storages (session, local) can only be strings. If you don't convert
-    // the user's id to a string, you would be comparing a number type (user's id) to a string type (storage item).
-    // You can also convert userId argument to a number value to be comparable, either works :)
     await data.forEach(user => {
-      if (user.id.toString() === userId) userObject = user;
+      if (user.id === userId) userObject = user; // FIXME:
     });
 
     return userObject;

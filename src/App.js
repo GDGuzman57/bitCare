@@ -2,14 +2,19 @@ import React, { Component } from "react";
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
-import SignUpServiceWorkerForm from "./pages/SignUp/ServiceWorkerForm";
-import Paths from "./pages/SignUp/Paths";
 import SignUpClientForm from "./pages/SignUp/ClientForm";
 import { HomePage } from "./pages/homePage";
-import { ServiceWorkerProfile } from "./pages/SignedIn/ServiceWorkerProfile";
-import { ClientProfile } from "./pages/SignedIn/ClientProfile";
 import ListServiceWorkers from "./pages/ListServiceWorkers";
 import LoginSample from "./pages/LoginSample";
+
+// Pages to render when signing up.
+import SignUpServiceWorkerForm from "./pages/SignUp/ServiceWorkerForm";
+import Paths from "./pages/SignUp/Paths";
+
+// Pages to render when signed in.
+import { ServiceWorkerProfile } from "./pages/SignedIn/ServiceWorkerProfile";
+import { ClientProfile } from "./pages/SignedIn/ClientProfile";
+import { ServiceWorkerEditProfile } from "./pages/SignedIn/ServiceWorkerEditProfile";
 
 class App extends Component {
   constructor(props) {
@@ -64,6 +69,13 @@ class App extends Component {
             path="/signin/service_worker-profile"
             render={props => (
               <ServiceWorkerProfile model={this.props.model} {...props} />
+            )}
+          />
+          <Route
+            exact
+            path="/signin/service_worker-profile/edit"
+            render={props => (
+              <ServiceWorkerEditProfile model={this.props.model} {...props} />
             )}
           />
           <Route

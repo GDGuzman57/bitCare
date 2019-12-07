@@ -12,31 +12,23 @@ class AvailabilityTable extends Component {
     this.state = {};
   }
 
-  // getList = () => {
-  //   if (this.props.list) {
-  //     return this.props.list();
-  //   }
-  // };
-
-  componentDidMount() {
-    console.log("cdm: from AvailabilityTable");
-  }
-
   render() {
-    console.log("render: from AvailabilityTable");
     console.log("render: from AvailabilityTable", this.props.list());
     return (
       <Container>
-        <Table responsive>
+        <Table responsive striped hover size="sm">
           <thead>
             <tr>
               <th>Day</th>
-              <th>Start time</th>
-              <th>End time</th>
+              <th>Start</th>
+              <th>End</th>
             </tr>
           </thead>
           <tbody>
-            <AvailabilityTableRow list={this.props.list} />
+            <AvailabilityTableRow
+              list={this.props.list}
+              handleDelete={this.props.handleDelete}
+            />
           </tbody>
         </Table>
       </Container>
