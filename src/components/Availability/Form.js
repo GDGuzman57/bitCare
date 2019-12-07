@@ -52,7 +52,6 @@ class AvailabilityForm extends Component {
       if (isInvalid) {
         this.props.handleSubmit([
           {
-            blockId: uuid(),
             day: day,
             start: start,
             end: end
@@ -61,7 +60,6 @@ class AvailabilityForm extends Component {
       }
     } else if (this.props.onGetBlock) {
       const block = {
-        blockId: uuid(),
         day: this.state.day,
         start: this.state.start,
         end: this.state.end

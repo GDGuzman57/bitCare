@@ -184,6 +184,7 @@ Model.FindOne = async function(userId) {
 
 // ATTENTION: availabilityBlock must be passed an OBJECT as an argument! Below is the schema.
 Model.List = async function(availabilityBlock = undefined) {
+  console.log(availabilityBlock);
   /*************************** 
   SCHEMA for availabilityBlock
   {
@@ -219,25 +220,31 @@ Model.List = async function(availabilityBlock = undefined) {
 
     // If no arguments were passed, list all users.
     if (availabilityBlock !== undefined) {
-      const startTime = this.TimeToSeconds(availabilityBlock.startTime);
-      const endTime = this.TimeToSeconds(availabilityBlock.endTime);
+      const startTime = this.TimeToSeconds(availabilityBlock.start);
+      const endTime = this.TimeToSeconds(availabilityBlock.end);
+      console.log(users);
 
       // Filters users whose availability matches to what was passed an an arguemnt
       // to availabilityBlock.
       filteredUsers = users.filter(user => {
-        return user.availability.some(available => {
-          return (
-            available.day === availabilityBlock.day &&
-            (this.TimeToSeconds(available.start) >= startTime ||
-              this.TimeToSeconds(available.end) <= endTime)
-          );
-        });
+        return (
+          user.isServiceWorker &&
+          user.availability.some(available => {
+            return (
+              available.day === availabilityBlock.day &&
+              // Converts both start and end times to numbers to be comparable. Cannot compare
+              // two time strings to see if one time string is greater than the other; must convert to numbers.
+              (this.TimeToSeconds(available.start) >= startTime ||
+                this.TimeToSeconds(available.end) <= endTime)
+            );
+          })
+        );
       });
 
       console.log(filteredUsers);
       return filteredUsers;
     } else {
-      console.log(data);
+      console.log(`data: ${data}`);
       return data;
     }
   } catch (e) {

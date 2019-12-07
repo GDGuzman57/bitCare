@@ -14,20 +14,36 @@ class ListServiceWorkers extends Component {
   //desiredTime = { day: , startTime: , endTime:}
   //Gets return array from Model.List() using parameter, to display a list of {WorkerCard}s
   renderInWorkerCards = async desiredTime => {
-    this.setState({ availabilityBlock: desiredTime });
+    // console.log(
+    //   `desiredTime: ${desiredTime.day}, ${desiredTime.start}, ${desiredTime.end}`
+    // );
+
+    console.log(desiredTime);
+
+    // Is undefined without "await". WHY?????
+    await this.setState({ availabilityBlock: desiredTime });
+
+    console.log(this.state.availabilityBlock);
 
     let workersReturned;
-    if (this.props.model.List) 
-    {
-      workersReturned = await this.props.model.List(this.state.availabilityBlock);
-      this.setState({ workerCardList: this.CreateWorkerCard(workersReturned) });
+    if (this.props.model.List) {
+      workersReturned = await this.props.model.List(
+        this.state.availabilityBlock
+      );
+
+      console.log(this.state.availabilityBlock);
+
+      this.setState({
+        workerCardList: this.CreateWorkerCard(workersReturned)
+      });
     }
   };
 
-  //Uses workers parameter (the return array from Model.List()) 
+  //Uses workers parameter (the return array from Model.List())
   // to create and return an array of {WorkerCard} components
   CreateWorkerCard = workers => {
     let cardList = null;
+    console.log(workers);
     cardList = workers.map((aWorker, indexKey) => (
       <WorkerCard worker={aWorker} key={indexKey} />
     ));
@@ -37,7 +53,10 @@ class ListServiceWorkers extends Component {
   render() {
     return (
       <>
-        <AvailabilityForm buttonText="Filter" onGetBlock={this.renderInWorkerCards} />
+        <AvailabilityForm
+          buttonText="Filter"
+          onGetBlock={this.renderInWorkerCards}
+        />
         {this.state.workerCardList}
       </>
     );
