@@ -4,8 +4,7 @@ import uuid from "uuid"; // Generates a seemingly random id. Used for user sign 
 export const Model = observable({ test: true });
 
 //
-// Updates a user's properties by taking in an object as an argument. You must first use the
-// FindOne method to fetch a user object.
+// Updates a user's properties by taking in an object as an argument.
 Model.UpdateUser = async function(userObject) {
   let fetchData, putData, reply, data, users;
 

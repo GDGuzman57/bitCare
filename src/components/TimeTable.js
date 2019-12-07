@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { TimeTableDay } from './TimeTableDay.js';
+import { TimeTableBlock } from './TimeTableBlock.js';
 import '../TheBlock.css';
 
 //Takes an array of objects into the -times- prop.
@@ -14,30 +14,18 @@ import '../TheBlock.css';
 */
 export class TimeTable extends Component
 {
+    displayTimeBlocks = () => {
+       let availableTimeBlocks = null;
 
-    temp = () => {
-        let days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]; 
-        let test = null;
-
-        test = days.map((day, i) => {
-            //find does not work. use filter instead
-            let temp = this.props.times.filter((f) => {
-                return f.day === day
+       if (this.props.times)
+       {
+            availableTimeBlocks = this.props.times.map(( block, index) => {
+               return <TimeTableBlock day={block.day} beginning={block.start} ending={block.end} key={index} />
             })
-            if (temp.length !== 0)
-            //currently only works with one 'time block'. possible solution(?): 
-            //temp.forEach => {day:aDay, avail:[{start:aTime, end:aTime}]}
-                return <TimeTableDay day={temp[0].day} beginning={temp[0].start} ending={temp[0].end} key={i} />
-            else
-                return <TimeTableDay day={day} key={i} />
-        })
-
-        test = this.props.times.map(( block, index) => {
-           return <TimeTableDay day={block.day} beginning={block.start} ending={block.end} key={index} />
-        })
-
-        return test;
+        }
+        return availableTimeBlocks;
     }
+
     render() {
         return(
             <div className="timeTable">
@@ -75,7 +63,7 @@ export class TimeTable extends Component
                 <div className="daysBlock">Friday</div>
                 <div className="daysBlock">Saturday</div>
                 <div className="daysBlock">Sunday</div>
-                {this.temp()}
+                {this.displayTimeBlocks()}
             </div>
         )
     }

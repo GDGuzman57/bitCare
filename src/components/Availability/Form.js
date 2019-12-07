@@ -38,10 +38,7 @@ class AvailabilityForm extends Component {
   };
 
   onClickDay = e => {
-    console.log(e.target.value);
     this.setState({ day: e.target.value });
-
-    // console.log("BUTTON TOGGLED! ", this.state.day);
   };
 
   onSubmit = e => {
@@ -72,8 +69,6 @@ class AvailabilityForm extends Component {
 
       this.props.onGetBlock(block);
     }
-
-    console.log("ADD BUTTON CLICKED");
   };
 
   toggleButtons = () => {
@@ -93,7 +88,6 @@ class AvailabilityForm extends Component {
           <ToggleButton
             name="day"
             variant="primary"
-            key={index}
             value={item}
             type="radio"
             onClick={this.onClickDay}
@@ -109,7 +103,6 @@ class AvailabilityForm extends Component {
   };
 
   render() {
-    console.log("render: from AvailabilityForm", this.state);
     return (
       <>
         <Container className="border border-dark w-100 rounded-sm mt-4">

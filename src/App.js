@@ -17,15 +17,6 @@ import { ClientProfile } from "./pages/SignedIn/ClientProfile";
 import { ServiceWorkerEditProfile } from "./pages/SignedIn/ServiceWorkerEditProfile";
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {};
-  }
-
-  onSubmit = (a, b, c) => {
-    console.log("Start time: " + b + "\nEnd time: " + c + "\nOn: " + a);
-  };
 
   render() {
     return (

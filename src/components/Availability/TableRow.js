@@ -10,8 +10,6 @@ class AvailabilityTableRow extends Component {
   deleteRow = e => {
     console.log(e.currentTarget.getAttribute("id"));
 
-    //
-    //
     if (this.props.handleDelete)
       this.props.handleDelete(e.currentTarget.getAttribute("id"));
   };
@@ -25,16 +23,12 @@ class AvailabilityTableRow extends Component {
           <td>{availabilityObj.end}</td>
         </tr>
       ));
-
       return row;
     }
   };
 
   render() {
-    console.log("render: from AvailabilityTableRow ", this.props.list());
-
     return <>{this.tableRows()}</>;
   }
 }
-
 export default AvailabilityTableRow;

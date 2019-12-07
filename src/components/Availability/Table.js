@@ -13,7 +13,6 @@ class AvailabilityTable extends Component {
   }
 
   render() {
-    console.log("render: from AvailabilityTable", this.props.list());
     return (
       <Container>
         <Table responsive striped hover size="sm">
@@ -35,5 +34,4 @@ class AvailabilityTable extends Component {
     );
   }
 }
-
 export default AvailabilityTable;
