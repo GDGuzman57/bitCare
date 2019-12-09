@@ -42,7 +42,7 @@ export class ServiceWorkerProfile extends Component {
   };
 
   onEditProfile = () => {
-    this.props.history.push("/signin/service_worker-profile/edit");
+    this.props.history.push("service_worker/edit");
   };
 
   render() {

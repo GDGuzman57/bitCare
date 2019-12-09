@@ -1,27 +1,39 @@
 import React, { Component } from "react";
 
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect
+} from "react-router-dom";
 
 import SignUpClientForm from "./pages/SignUp/ClientForm";
 import { HomePage } from "./pages/homePage";
 import ListServiceWorkers from "./pages/ListServiceWorkers";
 import LoginSample from "./pages/LoginSample";
+import SignIn from "./pages/Login";
 
 // Pages to render when signing up.
 import SignUpServiceWorkerForm from "./pages/SignUp/ServiceWorkerForm";
 import Paths from "./pages/SignUp/Paths";
 
 // Pages to render when signed in.
-import { ServiceWorkerProfile } from "./pages/SignedIn/ServiceWorkerProfile";
-import { ClientProfile } from "./pages/SignedIn/ClientProfile";
-import { ServiceWorkerEditProfile } from "./pages/SignedIn/ServiceWorkerEditProfile";
+import { ServiceWorkerProfile } from "./pages/Profile/ServiceWorkerProfile";
+import { ClientProfile } from "./pages/Profile/ClientProfile";
+import { ServiceWorkerEditProfile } from "./pages/Profile/ServiceWorkerEditProfile";
 
 class App extends Component {
-
   render() {
     return (
       <Router>
         <Switch>
+          <Route exact path="/profile">
+            {Boolean(sessionStorage.getItem("isServiceWorker")) ? (
+              <Redirect to="/profile/service_worker" />
+            ) : (
+              <Redirect to="/profile/client" />
+            )}
+          </Route>
           <Route
             exact
             path="/"
@@ -37,9 +49,7 @@ class App extends Component {
           <Route
             exact
             path="/signin"
-            render={props => (
-              <LoginSample model={this.props.model} {...props} />
-            )}
+            render={props => <SignIn model={this.props.model} {...props} />}
           />
           <Route
             exact
@@ -57,21 +67,21 @@ class App extends Component {
           />
           <Route
             exact
-            path="/signin/service_worker-profile"
+            path="/profile/service_worker"
             render={props => (
               <ServiceWorkerProfile model={this.props.model} {...props} />
             )}
           />
           <Route
             exact
-            path="/signin/service_worker-profile/edit"
+            path="/profile/service_worker/edit"
             render={props => (
               <ServiceWorkerEditProfile model={this.props.model} {...props} />
             )}
           />
           <Route
             exact
-            path="/signin/client-profile"
+            path="/profile/client"
             render={props => (
               <ClientProfile model={this.props.model} {...props} />
             )}

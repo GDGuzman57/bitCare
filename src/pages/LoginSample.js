@@ -37,10 +37,10 @@ class LoginSample extends Component {
         // of true or false.
         if (isServiceWorker === "true") {
           console.log(`isServiceWorker: ${isServiceWorker}`);
-          this.props.history.push("/signin/service_worker-profile"); // Go to service worker profile if "true".
+          this.props.history.replace("/profile"); // Go to service worker profile if "true".
         } else {
           console.log(`isServiceWorker: ${isServiceWorker}`);
-          this.props.history.push("/signin/client-profile"); // Go to service worker profile if "false".
+          this.props.history.replace("/profile"); // Go to service worker profile if "false".
         }
       } else {
         console.log("From <LoginSample/>: login failed!");
