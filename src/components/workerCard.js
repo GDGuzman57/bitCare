@@ -1,6 +1,4 @@
 import React, { Component } from "react";
-import { BasicButton } from "../components/basicButton.js";
-import { TimeTable } from "../components/TimeTable.js";
 
 import PropTypes from "prop-types";
 
@@ -53,6 +51,7 @@ class WorkerCard extends Component {
     //
     // Needed for Material-UI styling
     const { classes } = this.props;
+
     return (
       <>
         <Card className={classes.card}>
