@@ -1,15 +1,14 @@
 import React, { Component } from "react";
 import WorkerCard from "../components/workerCard.js";
 import AvailabilityForm from "../components/Availability/Form";
+import NavBar from "../components/NavBar";
 
 import PropTypes from "prop-types";
 
 import { withStyles } from "@material-ui/core/styles";
-import Container from "@material-ui/core/Container";
-import { bgcolor } from "@material-ui/system";
 
 //
-// Needed for Material-UI styling
+// MATERIAL-UI REQUIREMENT #1: tweak or add values here to apply styles to a Material-UI component.
 const styles = theme => ({
   palette: {
     background: "#000000"
@@ -66,10 +65,12 @@ class ListServiceWorkers extends Component {
 
   render() {
     //
-    // Needed for Material-UI styling
+    // MATERIAL-UI REQUIREMENT #2: Needed for accessing "styles" CB function declared above this class.
     const { classes } = this.props;
+
     return (
-      <div>
+      <>
+        <NavBar />
         <div className="container mt-5 mb-5">
           <div className="row">
             <div className="col s1">
@@ -81,17 +82,17 @@ class ListServiceWorkers extends Component {
             <div className="col s1">{this.state.workerCardList}</div>
           </div>
         </div>
-      </div>
+      </>
     );
   }
 }
 
 //
-// Needed for Material-UI styling
+// MATERIAL-UI REQUIREMENT #3: I don't know why this is needed.
 ListServiceWorkers.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
 //
-// Needed for Material-UI styling
+// MATERIAL-UI REQUIREMENT #4: Applies styles when render this component.
 export default withStyles(styles)(ListServiceWorkers);

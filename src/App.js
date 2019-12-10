@@ -8,9 +8,7 @@ import {
 } from "react-router-dom";
 
 import SignUpClientForm from "./pages/SignUp/ClientForm";
-import { HomePage } from "./pages/homePage";
 import ListServiceWorkers from "./pages/ListServiceWorkers";
-import LoginSample from "./pages/LoginSample";
 import SignIn from "./pages/Login";
 
 // Pages to render when signing up.
