@@ -125,7 +125,10 @@ class ServiceWorkerEditProfile extends Component {
 
   //
   // Handles any changes made to the input fields.
-  onChange = e => this.setState({ [e.target.name]: e.target.value });
+  onChange = e => {
+    if (!this.props.model.ExpressionIsNotSafe(e.target.value))
+      this.setState({ [e.target.name]: e.target.value });
+  }
 
   //
   // Used to pass down to the AvailabilityForm component to render the rows
