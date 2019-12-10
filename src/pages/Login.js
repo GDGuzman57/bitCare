@@ -9,6 +9,7 @@ import FormControl from "@material-ui/core/FormControl";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Container from "@material-ui/core/Container";
+import CardHeader from "@material-ui/core/CardHeader";
 
 const styles = theme => ({
   button: {
@@ -76,6 +77,8 @@ class SignIn extends Component {
     return (
       <Container align="center" className={classes.container}>
         <Card className={classes.card}>
+          <CardHeader title="bitCare" />
+
           <CardContent align="center">
             <FormControl onSubmit={this.handleSubmit} className="white">
               <Input
