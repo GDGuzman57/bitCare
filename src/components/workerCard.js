@@ -1,6 +1,26 @@
-import React, { Component } from 'react';
-import { BasicButton } from '../components/basicButton.js';
-import { TimeTable } from '../components/TimeTable.js';
+import React, { Component } from "react";
+import { BasicButton } from "../components/basicButton.js";
+import { TimeTable } from "../components/TimeTable.js";
+
+import PropTypes from "prop-types";
+
+import { withStyles } from "@material-ui/core/styles";
+import Card from "@material-ui/core/Card";
+import CardContent from "@material-ui/core/CardContent";
+import Button from "@material-ui/core/Button";
+import Typography from "@material-ui/core/Typography";
+
+const styles = theme => ({
+  card: {
+    maxWidth: 300,
+    marginBottom: 30
+  },
+  button: {
+    marginTop: 20,
+    sizeLarge: true,
+    color: "primary"
+  }
+});
 
 //Takes an object into the -worker- prop.
 //Comes from the array returned from Model.List()
@@ -16,28 +36,59 @@ import { TimeTable } from '../components/TimeTable.js';
           end:""
       }] }
 */
-export class WorkerCard extends Component
-{
-    constructor(props) {
-        super(props);
-        this.state = { buttonData : { buttonName : "Book", buttonFunction : this.tempFunction }}
-    }
+class WorkerCard extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      buttonData: { buttonName: "Book", buttonFunction: this.tempFunction }
+    };
+  }
 
-//Function passed to Book button (BasicButton component)
-    tempFunction = () => {
-        console.log("placeholder function");
-    }
+  //Function passed to Book button (BasicButton component)
+  tempFunction = () => {
+    console.log("placeholder function");
+  };
 
-    render() {
-        return(
-            <div>
-                <div>Name: {this.props.worker.firstName} {this.props.worker.lastName}</div>
-                <div>Email: {this.props.worker.email}</div>
+  render() {
+    //
+    // Needed for Material-UI styling
+    const { classes } = this.props;
+    return (
+      <>
+        <Card className={classes.card}>
+          <CardContent>
+            <Typography gutterBottom component="h5" align="center">
+              <a href="#">
+                {this.props.worker.firstName} {this.props.worker.lastName}
+              </a>
+            </Typography>
+            <Typography
+              variant="body2"
+              component="p"
+              color="textSecondary"
+              align="center"
+            >
+              {this.props.worker.phoneNumber}
+            </Typography>
+            <Typography
+              variant="body2"
+              component="p"
+              color="textSecondary"
+              align="center"
+            >
+              {this.props.worker.email}
+            </Typography>
 
-                <TimeTable times={this.props.worker.availability} />
-
-                <BasicButton buttonStuff={this.state.buttonData} />
+            <div align="center">
+              <Button className={classes.button}>Make a Booking</Button>
             </div>
-        )
-    }
+          </CardContent>
+        </Card>
+      </>
+    );
+  }
 }
+WorkerCard.propTypes = {
+  classes: PropTypes.object.isRequired
+};
+export default withStyles(styles)(WorkerCard);

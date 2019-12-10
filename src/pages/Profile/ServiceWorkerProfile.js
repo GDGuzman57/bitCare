@@ -19,7 +19,7 @@ export class ServiceWorkerProfile extends Component {
 
   async componentDidMount() {
     const user = await this.getUser();
-
+    console.log(user);
     // Set state from matched user.
     this.setState({
       firstName: user.firstName,
@@ -55,7 +55,7 @@ export class ServiceWorkerProfile extends Component {
       availability
     } = this.state;
     return (
-      <div>
+      <div className="card container">
         <h1>
           {firstName} {lastName} **checkmark img** User is certified
         </h1>

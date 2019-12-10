@@ -7,7 +7,11 @@ class SignIn extends Component {
   };
   handleInput = e => this.setState({ [e.target.name]: e.target.value });
 
-  onSubmit = async e => {
+  onLogout = () => {
+    if (this.props.model.Logout) this.props.model.Logout();
+  };
+
+  onLogin = async e => {
     e.preventDefault();
 
     // First checks if the CB functions, Login, is not null.
@@ -29,10 +33,10 @@ class SignIn extends Component {
         // of true or false.
         if (isServiceWorker === "true") {
           console.log(`isServiceWorker: ${isServiceWorker}`);
-          this.props.history.replace("/profile"); // Go to service worker profile if "true".
+          this.props.history.push("/profile/service_worker"); // Go to service worker profile if "true".
         } else {
           console.log(`isServiceWorker: ${isServiceWorker}`);
-          this.props.history.replace("/profile"); // Go to service worker profile if "false".
+          this.props.history.push("/profile/client"); // Go to service worker profile if "false".
         }
       } else {
         console.log("From <LoginSample/>: login failed!");
@@ -65,9 +69,18 @@ class SignIn extends Component {
           <div className="input-field">
             <button
               className="btn blue lighten-1 z-depth-0"
-              onClick={this.onSubmit}
+              onClick={this.onLogin}
             >
               Login
+            </button>
+          </div>
+          <div>
+            <h3>Test buttons</h3>
+            <button
+              className="btn blue lighten-1 z-depth-0"
+              onClick={this.onLogout}
+            >
+              Logout
             </button>
           </div>
         </form>

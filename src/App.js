@@ -28,7 +28,7 @@ class App extends Component {
       <Router>
         <Switch>
           <Route exact path="/profile">
-            {Boolean(sessionStorage.getItem("isServiceWorker")) ? (
+            {sessionStorage.getItem("isServiceWorker") === "true" ? (
               <Redirect to="/profile/service_worker" />
             ) : (
               <Redirect to="/profile/client" />
@@ -37,8 +37,7 @@ class App extends Component {
           <Route
             exact
             path="/"
-            model={this.props.model}
-            render={props => <HomePage {...props} />}
+            render={props => <SignIn model={this.props.model} {...props} />}
           />
           <Route
             exact

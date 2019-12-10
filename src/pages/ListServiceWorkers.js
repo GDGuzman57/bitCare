@@ -1,6 +1,20 @@
 import React, { Component } from "react";
-import { WorkerCard } from "../components/workerCard.js";
+import WorkerCard from "../components/workerCard.js";
 import AvailabilityForm from "../components/Availability/Form";
+
+import PropTypes from "prop-types";
+
+import { withStyles } from "@material-ui/core/styles";
+import Container from "@material-ui/core/Container";
+import { bgcolor } from "@material-ui/system";
+
+//
+// Needed for Material-UI styling
+const styles = theme => ({
+  palette: {
+    background: "#000000"
+  }
+});
 
 class ListServiceWorkers extends Component {
   constructor(props) {
@@ -51,15 +65,33 @@ class ListServiceWorkers extends Component {
   };
 
   render() {
+    //
+    // Needed for Material-UI styling
+    const { classes } = this.props;
     return (
-      <>
-        <AvailabilityForm
-          buttonText="Filter"
-          onGetBlock={this.renderInWorkerCards}
-        />
-        {this.state.workerCardList}
-      </>
+      <div>
+        <div className="container mt-5 mb-5">
+          <div className="row">
+            <div className="col s1">
+              <AvailabilityForm
+                buttonText="Filter"
+                onGetBlock={this.renderInWorkerCards}
+              />
+            </div>
+            <div className="col s1">{this.state.workerCardList}</div>
+          </div>
+        </div>
+      </div>
     );
   }
 }
-export default ListServiceWorkers;
+
+//
+// Needed for Material-UI styling
+ListServiceWorkers.propTypes = {
+  classes: PropTypes.object.isRequired
+};
+
+//
+// Needed for Material-UI styling
+export default withStyles(styles)(ListServiceWorkers);

@@ -1,18 +1,37 @@
 import React, { Component } from "react";
 
-import uuid from "uuid"; // Generates a seemingly random id. Used for user sign ups.
-
 import AvailabilityTable from "./Table";
 
-import Button from "react-bootstrap/Button";
-import ToggleButton from "react-bootstrap/ToggleButton";
-import ButtonGroup from "react-bootstrap/ButtonGroup";
+import PropTypes from "prop-types";
+
+import { withStyles } from "@material-ui/core/styles";
+import Button from "@material-ui/core/Button";
+import Select from "@material-ui/core/Select";
+import MenuItem from "@material-ui/core/MenuItem";
+import InputLabel from "@material-ui/core/InputLabel";
+import FormControl from "@material-ui/core/FormControl";
+import TextField from "@material-ui/core/TextField";
+import Card from "@material-ui/core/Card";
+import CardContent from "@material-ui/core/CardContent";
+import Container from "@material-ui/core/Container";
+
 import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
-import Container from "react-bootstrap/Container";
-import FormControl from "react-bootstrap/FormControl";
-import InputGroup from "react-bootstrap/InputGroup";
-import ToggleButtonGroup from "react-bootstrap/ToggleButtonGroup";
+
+//
+// Needed for Material-UI styling
+const styles = theme => ({
+  card: {
+    width: "100%"
+  },
+  select: {
+    width: "75%",
+    marginBottom: 15
+  },
+  inputTime: {
+    width: "30%"
+  }
+});
 
 class AvailabilityForm extends Component {
   constructor(props) {
@@ -69,7 +88,7 @@ class AvailabilityForm extends Component {
     }
   };
 
-  toggleButtons = () => {
+  dayOptions = () => {
     const days = [
       "Monday",
       "Tuesday",
@@ -80,102 +99,90 @@ class AvailabilityForm extends Component {
       "Sunday"
     ];
 
-    const checkboxes = days.map((item, index) => {
+    const options = days.map((item, index) => {
       return (
-        <ButtonGroup key={index} toggle className="mr-2 mt-1">
-          <ToggleButton
-            name="day"
-            variant="primary"
-            value={item}
-            type="radio"
-            onClick={this.onClickDay}
-            as={Col}
-          >
-            {item.slice(0, 3)}
-          </ToggleButton>
-        </ButtonGroup>
+        <MenuItem name="day" value={item} key={index}>
+          {item}
+        </MenuItem>
       );
     });
 
-    return checkboxes;
+    return (
+      <Select labelId="label" id="select" onChange={this.onClickDay}>
+        {options}
+      </Select>
+    );
   };
 
   render() {
+    //
+    // Needed for Material-UI styling
+    const { classes } = this.props;
+
     return (
       <>
-        <Container className="border border-dark w-100 rounded-sm mt-4">
-          <Form.Row>
-            <Form.Group sm lg="8" as={Col}>
-              {this.toggleButtons()}
-            </Form.Group>
-          </Form.Row>
+        <Card className={classes.card}>
+          <CardContent>
+            <FormControl className={classes.select}>
+              <InputLabel id="demo-simple-select">Select a day</InputLabel>
+              {this.dayOptions()}
+            </FormControl>
 
-          <Form.Row className="mt-3">
-            <Form.Group sm lg="6" as={Col}>
-              <InputGroup>
-                <InputGroup.Prepend>
-                  <InputGroup.Text id="inputGroup-sizing-sm">
-                    From
-                  </InputGroup.Text>
-                </InputGroup.Prepend>
+            <TextField
+              label="From"
+              name="start"
+              onChange={this.onChange}
+              className={classes.inputTime}
+              type="time"
+              value={this.state.start}
+            />
 
-                <FormControl
-                  name="start"
-                  onChange={this.onChange}
-                  className="form-control"
-                  type="time"
-                  value={this.state.start}
-                />
-              </InputGroup>
-            </Form.Group>
-
-            <Form.Group sm lg="6" as={Col}>
-              <InputGroup>
-                <InputGroup.Prepend>
-                  <InputGroup.Text id="inputGroup-sizing-sm">
-                    To
-                  </InputGroup.Text>
-                </InputGroup.Prepend>
-                <FormControl
-                  name="end"
-                  onChange={this.onChange}
-                  className="form-control"
-                  type="time"
-                  value={this.state.end}
-                />
-              </InputGroup>
-            </Form.Group>
-          </Form.Row>
-          <Form.Row className="mt-1 mb-1">
-            <Col>
-              <Button
-                variant="success"
-                type="submit"
-                onClick={this.onSubmit}
-                size="sm"
-                className="mb-2 float-right"
-              >
-                {this.props.buttonText}
-              </Button>
-            </Col>
-          </Form.Row>
-          {// Renders a table if "true" was passed to the prop "includeTable".
-          this.props.includeTable ? (
-            <Form.Row>
-              <Col>
-                <AvailabilityTable
-                  list={this.getList}
-                  handleDelete={this.props.handleDelete}
-                />
-              </Col>
-            </Form.Row>
-          ) : (
+            <TextField
+              label="To"
+              name="end"
+              onChange={this.onChange}
+              className={classes.inputTime}
+              type="time"
+              value={this.state.end}
+            />
             <br />
-          )}
-        </Container>
+            <Button
+              variant="contained"
+              color="primary"
+              type="submit"
+              onClick={this.onSubmit}
+              size="sm"
+              className="mt-4"
+            >
+              {this.props.buttonText}
+            </Button>
+
+            {// Renders a table if "true" was passed to the prop "includeTable".
+            this.props.includeTable ? (
+              <Form.Row>
+                <Col>
+                  <AvailabilityTable
+                    list={this.getList}
+                    handleDelete={this.props.handleDelete}
+                  />
+                </Col>
+              </Form.Row>
+            ) : (
+              <br />
+            )}
+          </CardContent>
+        </Card>
       </>
     );
   }
 }
 
-export default AvailabilityForm;
+//
+// Needed for Material-UI styling
+AvailabilityForm.propTypes = {
+  classes: PropTypes.object.isRequired
+};
+
+//
+// Needed for Material-UI styling
+export default withStyles(styles)(AvailabilityForm);

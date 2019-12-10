@@ -2,6 +2,8 @@ import React, { Component } from "react";
 
 import "../../editPageStyle.css";
 
+import uuid from "uuid";
+
 import AvailabilityForm from "../../components/Availability/Form";
 import FullNameForm from "../../components/SignUpForms/FullNameForm";
 import EmailForm from "../../components/SignUpForms/EmailForm";
@@ -52,7 +54,7 @@ class ServiceWorkerEditProfile extends Component {
 
       if (this.props.model.UpdateUser) {
         if (await this.props.model.UpdateUser(user))
-          this.props.history.replace("signin/service_worker-profile");
+          this.props.history.push("/profile/");
 
         return true;
       }
@@ -62,13 +64,20 @@ class ServiceWorkerEditProfile extends Component {
   //
   // Adds to the worker's list of availabilities.
   onAddRow = value => {
-    let availabilityList = this.state.availability.concat(value);
+    const timeBlock = {
+      blockId: uuid(),
+      day: value[0]["day"],
+      start: value[0]["start"],
+      end: value[0]["end"]
+    };
+
+    let availabilityList = this.state.availability.concat(timeBlock);
 
     this.setState({
       availability: availabilityList // FIXME: check for duplicate time blocks.
     });
 
-    console.log("From ServiceWorkerEditProfile: ", value);
+    console.log("From ServiceWorkerEditProfile: ", timeBlock);
   };
 
   onDeleteRow = value => {
