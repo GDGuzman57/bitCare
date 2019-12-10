@@ -1,5 +1,30 @@
 import React, { Component } from "react";
 
+import PropTypes from "prop-types";
+
+import { withStyles } from "@material-ui/core/styles";
+import Input from "@material-ui/core/Input";
+import Button from "@material-ui/core/Button";
+import FormControl from "@material-ui/core/FormControl";
+import Card from "@material-ui/core/Card";
+import CardContent from "@material-ui/core/CardContent";
+import Container from "@material-ui/core/Container";
+
+const styles = theme => ({
+  button: {
+    marginTop: 20
+  },
+  input: {
+    marginTop: 15
+  },
+  card: {
+    maxWidth: "50%"
+  },
+  container: {
+    marginTop: 100
+  }
+});
+
 class SignIn extends Component {
   state = {
     email: "",
@@ -44,48 +69,55 @@ class SignIn extends Component {
     }
   };
   render() {
+    //
+    // Needed for Material-UI styling
+    const { classes } = this.props;
+
     return (
-      <div className="container">
-        <form onSubmit={this.handleSubmit} className="white">
-          <h5 className="grey-text text-darken-3">Sign In</h5>
-          <div className="input-field">
-            <label htmlFor="email">Email</label>
-            <input
-              name="email"
-              type="email"
-              id="email"
-              onChange={this.handleInput}
-            />
-          </div>
-          <div className="input-field">
-            <label htmlFor="password">Password</label>
-            <input
-              name="password"
-              type="password"
-              id="password"
-              onChange={this.handleInput}
-            />
-          </div>
-          <div className="input-field">
-            <button
-              className="btn blue lighten-1 z-depth-0"
-              onClick={this.onLogin}
-            >
-              Login
-            </button>
-          </div>
-          <div>
-            <h3>Test buttons</h3>
-            <button
-              className="btn blue lighten-1 z-depth-0"
-              onClick={this.onLogout}
-            >
-              Logout
-            </button>
-          </div>
-        </form>
-      </div>
+      <Container align="center" className={classes.container}>
+        <Card className={classes.card}>
+          <CardContent align="center">
+            <FormControl onSubmit={this.handleSubmit} className="white">
+              <Input
+                name="email"
+                type="email"
+                id="email"
+                placeholder="email"
+                onChange={this.handleInput}
+                className={classes.input}
+              />
+              <Input
+                name="password"
+                type="password"
+                id="password"
+                placeholder="password"
+                onChange={this.handleInput}
+                className={classes.input}
+              />
+              <Button
+                variant="contained"
+                onClick={this.onLogin}
+                color="primary"
+                className={classes.button}
+              >
+                Login
+              </Button>
+              <div>
+                <h3>Test buttons</h3>
+                <Button className={classes.button} onClick={this.onLogout}>
+                  Logout
+                </Button>
+              </div>
+            </FormControl>
+          </CardContent>
+        </Card>
+      </Container>
     );
   }
 }
-export default SignIn;
+
+SignIn.propTypes = {
+  classes: PropTypes.object.isRequired
+};
+
+export default withStyles(styles)(SignIn);
