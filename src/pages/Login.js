@@ -5,7 +5,11 @@ class SignIn extends Component {
     email: "",
     password: ""
   };
-  handleInput = e => this.setState({ [e.target.name]: e.target.value });
+
+  handleInput = e => {
+    if (!this.props.model.ExpressionIsNotSafe(e.target.value))
+      this.setState({ [e.target.name]: e.target.value });
+  }
 
   onLogout = () => {
     if (this.props.model.Logout) this.props.model.Logout();

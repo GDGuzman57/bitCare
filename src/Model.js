@@ -3,6 +3,14 @@ import uuid from "uuid"; // Generates a seemingly random id. Used for user sign 
 
 export const Model = observable({ test: true });
 
+// Takes a string as checks if it matches a safe character: ( a-z, 0-9, ., @, - )
+//Returns a bool, false if the string is safe to use, true if it is not
+Model.ExpressionIsNotSafe = (expression) => {
+  var regex = new RegExp(/[^\w\s.@-]/gi);
+  if (regex.test(expression))
+    console.log("Input is not safe.");
+  return regex.test(expression);
+}
 //
 // Updates a user's properties by taking in an object as an argument.
 Model.UpdateUser = async function(userObject) {
