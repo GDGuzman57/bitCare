@@ -1,5 +1,8 @@
 import React, { Component } from "react";
 
+import TableRow from "@material-ui/core/TableRow";
+import TableCell from "@material-ui/core/TableCell";
+
 class AvailabilityTableRow extends Component {
   constructor(props) {
     super(props);
@@ -17,11 +20,16 @@ class AvailabilityTableRow extends Component {
   tableRows = () => {
     if (this.props.list) {
       let row = this.props.list().map((availabilityObj, index) => (
-        <tr onClick={this.deleteRow} key={index} id={availabilityObj.blockId}>
-          <td>{availabilityObj.day}</td>
-          <td>{availabilityObj.start}</td>
-          <td>{availabilityObj.end}</td>
-        </tr>
+        <TableRow
+          onClick={this.deleteRow}
+          key={index}
+          id={availabilityObj.blockId}
+          hover
+        >
+          <TableCell>{availabilityObj.day}</TableCell>
+          <TableCell>{availabilityObj.start}</TableCell>
+          <TableCell>{availabilityObj.end}</TableCell>
+        </TableRow>
       ));
       return row;
     }

@@ -1,7 +1,7 @@
 import { observable } from "mobx";
 import uuid from "uuid"; // Generates a seemingly random id. Used for user sign ups.
 
-export const Model = observable({ test: true });
+export const Model = observable({ username: null });
 
 /*
 SAMPLE USERS

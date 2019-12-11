@@ -1,20 +1,49 @@
 import React, { Component } from "react";
 
-import "../../editPageStyle.css";
-
 import uuid from "uuid";
 
+import PropTypes from "prop-types";
+
 import AvailabilityForm from "../../components/Availability/Form";
-import FullNameForm from "../../components/SignUpForms/FullNameForm";
-import EmailForm from "../../components/SignUpForms/EmailForm";
-import PhoneNumberForm from "../../components/SignUpForms/PhoneNumberForm";
-import TextAreaForm from "../../components/SignUpForms/TextAreaForm";
 
-import Form from "react-bootstrap/Form";
-import Container from "react-bootstrap/Container";
-import Button from "react-bootstrap/Button";
+import { withStyles } from "@material-ui/core/styles";
+import Button from "@material-ui/core/Button";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import TextField from "@material-ui/core/TextField";
+import Grid from "@material-ui/core/Grid";
+import Box from "@material-ui/core/Box";
+import Typography from "@material-ui/core/Typography";
+import Container from "@material-ui/core/Container";
+import ExpansionPanel from "@material-ui/core/ExpansionPanel";
+import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
-import { NavLink } from "react-router-dom";
+const styles = theme => ({
+  paper: {
+    marginTop: theme.spacing(8),
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center"
+  },
+  avatar: {
+    margin: theme.spacing(1),
+    backgroundColor: theme.palette.secondary.main
+  },
+  form: {
+    width: "100%", // Fix IE 11 issue.
+    marginTop: theme.spacing(3)
+  },
+  submit: {
+    margin: theme.spacing(3, 0, 2)
+  },
+  add: {
+    marginBottom: theme.spacing(2)
+  },
+  heading: {
+    fontSize: theme.typography.pxToRem(15),
+    fontWeight: theme.typography.fontWeightRegular
+  }
+});
 
 class ServiceWorkerEditProfile extends Component {
   constructor(props) {
@@ -32,7 +61,9 @@ class ServiceWorkerEditProfile extends Component {
 
   //
   // Uses the Model's FindOne method which makes a call to our mock backend.
-  updateUser = async () => {
+  updateUser = async e => {
+    e.preventDefault();
+
     let user, userId;
     const {
       firstName,
@@ -61,7 +92,7 @@ class ServiceWorkerEditProfile extends Component {
       if (this.props.model.UpdateUser) {
         if (await this.props.model.UpdateUser(user))
           // Go back to user's profile if the operation is successful.
-          this.props.history.push("/profile/client");
+          this.props.history.push("/profile/service_worker");
 
         return true;
       }
@@ -143,44 +174,112 @@ class ServiceWorkerEditProfile extends Component {
   getList = () => this.state.availability;
 
   render() {
+    const { classes } = this.props;
+    const { firstName, lastName, email, phoneNumber, aboutMe } = this.state;
+
     return (
-      <Container className="border border-dark w-100 rounded-sm">
-        <Form className="mt-3">
-          <Form.Row>
-            <FullNameForm onChange={this.onChange} />
-          </Form.Row>
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <div className={classes.paper}>
+          <Typography component="h1" variant="h5">
+            Edit
+          </Typography>
+          <form className={classes.form}>
+            <Grid container spacing={2}>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  onChange={this.onChange}
+                  name="firstName"
+                  variant="outlined"
+                  fullWidth
+                  id="firstName"
+                  label="First Name"
+                  autoFocus
+                  value={firstName}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  onChange={this.onChange}
+                  variant="outlined"
+                  fullWidth
+                  id="lastName"
+                  label="Last Name"
+                  name="lastName"
+                  value={lastName}
+                />
+              </Grid>
 
-          <Form.Row>
-            <PhoneNumberForm onChange={this.onChange} />
-            <EmailForm onChange={this.onChange} />
-          </Form.Row>
-
-          <Form.Row>
-            <TextAreaForm
-              onChange={this.onChange}
-              label={"About me"}
-              placeholder={"Tell us about yourself..."}
-              name="aboutMe"
-            />
-          </Form.Row>
-
-          <AvailabilityForm
-            handleSubmit={this.onAddRow}
-            handleDelete={this.onDeleteRow}
-            list={this.getList}
-            includeTable={true}
-            buttonText="Add"
-          />
-
-          <Form.Row className="justify-content-md-center">
-            <Button onClick={this.updateUser} className="mb-2 mt-3">
+              <Grid item xs={12}>
+                <TextField
+                  onChange={this.onChange}
+                  variant="outlined"
+                  fullWidth
+                  id="email"
+                  label="Email Address"
+                  name="email"
+                  value={email}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  onChange={this.onChange}
+                  variant="outlined"
+                  fullWidth
+                  name="phoneNumber"
+                  label="Phone Number"
+                  id="phoneNumber"
+                  value={phoneNumber}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  onChange={this.onChange}
+                  variant="outlined"
+                  fullWidth
+                  name="aboutMe"
+                  label="About Me"
+                  id="aboutMe"
+                  value={aboutMe}
+                  multiline
+                  rows="4"
+                />
+              </Grid>
+            </Grid>
+            <Grid>
+              <ExpansionPanel>
+                <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+                  <Typography className={classes.heading}>
+                    Set Availability
+                  </Typography>
+                </ExpansionPanelSummary>
+                <AvailabilityForm
+                  handleSubmit={this.onAddRow}
+                  handleDelete={this.onDeleteRow}
+                  list={this.getList}
+                  includeTable={true}
+                  buttonText="Add"
+                />
+              </ExpansionPanel>
+            </Grid>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+              onClick={this.updateUser}
+            >
               Save
             </Button>
-          </Form.Row>
-        </Form>
+          </form>
+        </div>
+        <Box mt={5}></Box>
       </Container>
     );
   }
 }
-
-export { ServiceWorkerEditProfile };
+ServiceWorkerEditProfile.propTypes = {
+  classes: PropTypes.object.isRequired
+};
+export default withStyles(styles)(ServiceWorkerEditProfile);

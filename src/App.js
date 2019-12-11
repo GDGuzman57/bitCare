@@ -18,7 +18,7 @@ import Paths from "./pages/SignUp/Paths";
 // Pages to render when signed in.
 import ServiceWorkerProfile from "./pages/Profile/ServiceWorkerProfile";
 import { ClientProfile } from "./pages/Profile/ClientProfile";
-import { ServiceWorkerEditProfile } from "./pages/Profile/ServiceWorkerEditProfile";
+import ServiceWorkerEditProfile from "./pages/Profile/ServiceWorkerEditProfile";
 import ClientEditProfile from "./pages/Profile/ClientEditProfile";
 
 class App extends Component {

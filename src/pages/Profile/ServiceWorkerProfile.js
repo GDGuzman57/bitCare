@@ -4,12 +4,7 @@ import PropTypes from "prop-types";
 
 import { withStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import AppBar from "@material-ui/core/AppBar";
-import Tabs from "@material-ui/core/Tabs";
-import Tab from "@material-ui/core/Tab";
-import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
-import Box from "@material-ui/core/Box";
 
 import { TimeTable } from "../../components/TimeTable";
 import Navbar from "../../components/NavBar";
@@ -57,6 +52,23 @@ class ServiceWorkerProfile extends Component {
     this.props.history.push("service_worker/edit");
   };
 
+  onLogin = () => {
+    const isLoggedIn = sessionStorage.getItem("isLoggedIn");
+    if (isLoggedIn === "false" || isLoggedIn === null)
+      this.props.history.push("signin");
+  };
+
+  onLogout = () => {
+    if (this.props.model.Logout) {
+      this.props.model.Logout();
+      this.props.history.replace("/signin");
+    }
+  };
+
+  onProfile = () => {
+    this.props.history.push("/profile");
+  };
+
   render() {
     const { classes } = this.props;
 
@@ -70,7 +82,12 @@ class ServiceWorkerProfile extends Component {
     } = this.state;
     return (
       <>
-        <Navbar />
+        <Navbar
+          username={`${this.state.firstName} ${this.state.lastName} `}
+          handleLogin={this.onLogin}
+          handleLogout={this.onLogout}
+          handleProfile={this.onProfile}
+        />
         <Container>
           <h1>
             {firstName} {lastName} **checkmark img** User is certified

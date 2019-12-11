@@ -13,7 +13,7 @@ import FormControl from "@material-ui/core/FormControl";
 import TextField from "@material-ui/core/TextField";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
-import Container from "@material-ui/core/Container";
+import Typography from "@material-ui/core/Typography";
 
 import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
@@ -30,6 +30,13 @@ const styles = theme => ({
   },
   inputTime: {
     width: "30%"
+  },
+  add: {
+    marginTop: theme.spacing(2),
+    marginBottom: theme.spacing(2)
+  },
+  caption: {
+    marginLeft: theme.spacing(1)
   }
 });
 
@@ -151,11 +158,18 @@ class AvailabilityForm extends Component {
               color="primary"
               type="submit"
               onClick={this.onSubmit}
-              size="sm"
-              className="mt-4"
+              size="small"
+              className={classes.add}
             >
               {this.props.buttonText}
             </Button>
+            <Typography
+              className={classes.caption}
+              variant="caption"
+              align="right"
+            >
+              Click row to cancel.
+            </Typography>
 
             {// Renders a table if "true" was passed to the prop "includeTable".
             this.props.includeTable ? (

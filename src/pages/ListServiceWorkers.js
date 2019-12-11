@@ -9,11 +9,7 @@ import { withStyles } from "@material-ui/core/styles";
 
 //
 // MATERIAL-UI REQUIREMENT #1: tweak or add values here to apply styles to a Material-UI component.
-const styles = theme => ({
-  palette: {
-    background: "#000000"
-  }
-});
+const styles = theme => ({});
 
 class ListServiceWorkers extends Component {
   constructor(props) {
