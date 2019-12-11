@@ -30,6 +30,8 @@ class ServiceWorkerEditProfile extends Component {
     };
   }
 
+  //
+  // Uses the Model's FindOne method which makes a call to our mock backend.
   updateUser = async () => {
     let user, userId;
     const {
@@ -42,9 +44,13 @@ class ServiceWorkerEditProfile extends Component {
     } = this.state;
 
     if (this.props.model.FindOne) {
+      // Reads the value of "id" in the session storage.
       userId = sessionStorage.getItem("id");
+
+      // Stores the retrieved user in "user" variable.
       user = JSON.parse(JSON.stringify(await this.props.model.FindOne(userId)));
 
+      // Assign input values to user's corresponding property values.
       user.firstName = firstName;
       user.lastName = lastName;
       user.email = email;
@@ -54,7 +60,8 @@ class ServiceWorkerEditProfile extends Component {
 
       if (this.props.model.UpdateUser) {
         if (await this.props.model.UpdateUser(user))
-          this.props.history.push("/profile/");
+          // Go back to user's profile if the operation is successful.
+          this.props.history.push("/profile/client");
 
         return true;
       }
@@ -128,7 +135,7 @@ class ServiceWorkerEditProfile extends Component {
   onChange = e => {
     if (!this.props.model.ExpressionIsNotSafe(e.target.value))
       this.setState({ [e.target.name]: e.target.value });
-  }
+  };
 
   //
   // Used to pass down to the AvailabilityForm component to render the rows
@@ -167,12 +174,7 @@ class ServiceWorkerEditProfile extends Component {
 
           <Form.Row className="justify-content-md-center">
             <Button onClick={this.updateUser} className="mb-2 mt-3">
-              <NavLink
-                to="/signup/service_worker-profile"
-                className="profileSaveButton"
-              >
-                Save
-              </NavLink>
+              Save
             </Button>
           </Form.Row>
         </Form>

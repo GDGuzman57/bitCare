@@ -108,6 +108,10 @@ class ListServiceWorkers extends Component {
     }
   };
 
+  onProfile = () => {
+    this.props.history.push("/profile");
+  };
+
   render() {
     //
     // MATERIAL-UI REQUIREMENT #2: Needed for accessing "styles" CB function declared above this class.
@@ -119,6 +123,7 @@ class ListServiceWorkers extends Component {
           username={this.state.username}
           handleLogin={this.onLogin}
           handleLogout={this.onLogout}
+          handleProfile={this.onProfile}
         />
         <div className="container mt-5 mb-5">
           <div className="row">

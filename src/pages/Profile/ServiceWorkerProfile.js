@@ -1,10 +1,22 @@
 import React, { Component } from "react";
 
-import Button from "react-bootstrap/Button";
+import PropTypes from "prop-types";
+
+import { withStyles } from "@material-ui/core/styles";
+import Container from "@material-ui/core/Container";
+import AppBar from "@material-ui/core/AppBar";
+import Tabs from "@material-ui/core/Tabs";
+import Tab from "@material-ui/core/Tab";
+import Typography from "@material-ui/core/Typography";
+import Button from "@material-ui/core/Button";
+import Box from "@material-ui/core/Box";
 
 import { TimeTable } from "../../components/TimeTable";
+import Navbar from "../../components/NavBar";
 
-export class ServiceWorkerProfile extends Component {
+const styles = theme => ({});
+
+class ServiceWorkerProfile extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -46,6 +58,8 @@ export class ServiceWorkerProfile extends Component {
   };
 
   render() {
+    const { classes } = this.props;
+
     const {
       firstName,
       lastName,
@@ -55,23 +69,41 @@ export class ServiceWorkerProfile extends Component {
       availability
     } = this.state;
     return (
-      <div className="card container">
-        <h1>
-          {firstName} {lastName} **checkmark img** User is certified
-        </h1>
-        <Button onClick={this.onEditProfile}>Edit</Button>
-        <h2>About Me</h2>
-        <p>{aboutMe}</p>
+      <>
+        <Navbar />
+        <Container>
+          <h1>
+            {firstName} {lastName} **checkmark img** User is certified
+          </h1>
+          <Button
+            onClick={this.onEditProfile}
+            color="primary"
+            variant="contained"
+          >
+            Edit
+          </Button>
+          <h2>About Me</h2>
+          <p>{aboutMe}</p>
 
-        <h2>Email</h2>
-        <p>{email}</p>
+          <h2>Email</h2>
+          <p>{email}</p>
 
-        <h2>Phone</h2>
-        <p>{phoneNumber}</p>
+          <h2>Phone</h2>
+          <p>{phoneNumber}</p>
 
-        <h2>Availability</h2>
-        <TimeTable times={availability} />
-      </div>
+          <h2>Availability</h2>
+          <TimeTable times={availability} />
+        </Container>
+      </>
     );
   }
 }
+
+ServiceWorkerProfile.propTypes = {
+  classes: PropTypes.object.isRequired,
+  children: PropTypes.node,
+  index: PropTypes.any.isRequired,
+  value: PropTypes.any.isRequired
+};
+
+export default withStyles(styles)(ServiceWorkerProfile);

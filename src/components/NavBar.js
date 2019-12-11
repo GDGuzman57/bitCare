@@ -28,7 +28,6 @@ class NavBar extends Component {
   }
 
   render() {
-    console.log(sessionStorage.getItem("isLoggedIn"));
     //
     // MATERIAL-UI REQUIREMENT #2: Needed for accessing "styles" CB function declared above this class.
     const { classes } = this.props;
@@ -53,7 +52,11 @@ class NavBar extends Component {
             // then render an icon, and a login and logout button.
             sessionStorage.getItem("isLoggedIn") === "true" ? (
               <div>
-                <Button color="inherit" className={classes.button}>
+                <Button
+                  color="inherit"
+                  className={classes.button}
+                  onClick={this.props.handleProfile}
+                >
                   <AccountCircleIcon className={classes.profileIcon} />{" "}
                   {this.props.username}
                 </Button>
