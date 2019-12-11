@@ -12,11 +12,17 @@ import Container from "@material-ui/core/Container";
 import CardHeader from "@material-ui/core/CardHeader";
 
 const styles = theme => ({
-  button: {
+  loginButton: {
     marginTop: 20
   },
+  signupButton: {
+    marginTop: 15,
+    textSecondary: true,
+    sizeSmall: true
+  },
   input: {
-    marginTop: 15
+    marginTop: 15,
+    maxWidth: "100%"
   },
   card: {
     maxWidth: "50%"
@@ -35,10 +41,10 @@ class SignIn extends Component {
   handleInput = e => {
     if (!this.props.model.ExpressionIsNotSafe(e.target.value))
       this.setState({ [e.target.name]: e.target.value });
-  }
+  };
 
-  onLogout = () => {
-    if (this.props.model.Logout) this.props.model.Logout();
+  onSignup = () => {
+    this.props.history.push("signup");
   };
 
   onLogin = async e => {
@@ -105,14 +111,19 @@ class SignIn extends Component {
                 variant="contained"
                 onClick={this.onLogin}
                 color="primary"
-                className={classes.button}
+                className={classes.loginButton}
               >
                 Login
               </Button>
               <div>
-                <h3>Test buttons</h3>
-                <Button className={classes.button} onClick={this.onLogout}>
-                  Logout
+                <Button
+                  className={classes.signupButton}
+                  onClick={this.onSignup}
+                  variant="text"
+                  color="secondary"
+                  size="small"
+                >
+                  Don't have an account?
                 </Button>
               </div>
             </FormControl>

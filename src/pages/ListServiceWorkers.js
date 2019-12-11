@@ -18,7 +18,11 @@ const styles = theme => ({
 class ListServiceWorkers extends Component {
   constructor(props) {
     super(props);
-    this.state = { workerCardList: null, availabilityBlock: undefined };
+    this.state = {
+      workerCardList: null,
+      availabilityBlock: undefined,
+      username: null
+    };
   }
 
   // Fishes out an object from the AvailabilityForm component which contains
@@ -63,6 +67,47 @@ class ListServiceWorkers extends Component {
     return cardList;
   };
 
+  async componentDidMount() {
+    let user = null;
+    const userId = sessionStorage.getItem("id");
+    const isServiceWorker = sessionStorage.getItem("isServiceWorker");
+
+    if (this.props.model.FindOne) {
+      user = await this.props.model.FindOne(userId);
+      console.log(user);
+
+      //
+      // Sets state for "username". The value of "username" will be passed down to the
+      // NavBar component if a user is logged in.
+      if (isServiceWorker === "true") {
+        this.setState({
+          username: `${user.firstName} ${user.lastName}`
+        });
+      } else if (isServiceWorker === "false") {
+        this.setState({
+          username: `${user.parentGuardianFirstName} ${user.parentGuardianLastName}`
+        });
+      } else {
+        this.setState({
+          username: null
+        });
+      }
+    }
+  }
+
+  onLogin = () => {
+    const isLoggedIn = sessionStorage.getItem("isLoggedIn");
+    if (isLoggedIn === "false" || isLoggedIn === null)
+      this.props.history.push("signin");
+  };
+
+  onLogout = () => {
+    if (this.props.model.Logout) {
+      this.props.model.Logout();
+      this.props.history.push("signin");
+    }
+  };
+
   render() {
     //
     // MATERIAL-UI REQUIREMENT #2: Needed for accessing "styles" CB function declared above this class.
@@ -70,7 +115,11 @@ class ListServiceWorkers extends Component {
 
     return (
       <>
-        <NavBar />
+        <NavBar
+          username={this.state.username}
+          handleLogin={this.onLogin}
+          handleLogout={this.onLogout}
+        />
         <div className="container mt-5 mb-5">
           <div className="row">
             <div className="col s1">
