@@ -16,9 +16,10 @@ import SignUpServiceWorkerForm from "./pages/SignUp/ServiceWorkerForm";
 import Paths from "./pages/SignUp/Paths";
 
 // Pages to render when signed in.
-import { ServiceWorkerProfile } from "./pages/Profile/ServiceWorkerProfile";
+import ServiceWorkerProfile from "./pages/Profile/ServiceWorkerProfile";
 import { ClientProfile } from "./pages/Profile/ClientProfile";
 import { ServiceWorkerEditProfile } from "./pages/Profile/ServiceWorkerEditProfile";
+import ClientEditProfile from "./pages/Profile/ClientEditProfile";
 
 class App extends Component {
   render() {
@@ -74,6 +75,13 @@ class App extends Component {
             path="/profile/service_worker/edit"
             render={props => (
               <ServiceWorkerEditProfile model={this.props.model} {...props} />
+            )}
+          />
+          <Route
+            exact
+            path="/profile/client/edit"
+            render={props => (
+              <ClientEditProfile model={this.props.model} {...props} />
             )}
           />
           <Route
