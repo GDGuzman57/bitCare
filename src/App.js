@@ -17,9 +17,11 @@ import Paths from "./pages/SignUp/Paths";
 
 // Pages to render when signed in.
 import ServiceWorkerProfile from "./pages/Profile/ServiceWorkerProfile";
-import { ClientProfile } from "./pages/Profile/ClientProfile";
+import ClientProfile from "./pages/Profile/ClientProfile";
 import ServiceWorkerEditProfile from "./pages/Profile/ServiceWorkerEditProfile";
 import ClientEditProfile from "./pages/Profile/ClientEditProfile";
+
+import Splash from "./pages/Splash";
 
 class App extends Component {
   render() {
@@ -97,6 +99,11 @@ class App extends Component {
             render={props => (
               <ListServiceWorkers model={this.props.model} {...props} />
             )}
+          />
+          <Route
+            exact
+            path="/splash"
+            render={props => <Splash model={this.props.model} {...props} />}
           />
         </Switch>
       </Router>

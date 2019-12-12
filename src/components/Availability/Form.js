@@ -14,12 +14,13 @@ import TextField from "@material-ui/core/TextField";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
+import Grid from "@material-ui/core/Grid";
 
 import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
 
 //
-// Needed for Material-UI styling
+// Needed for styling Material-UI components.
 const styles = theme => ({
   card: {
     width: "100%"
@@ -130,11 +131,12 @@ class AvailabilityForm extends Component {
       <>
         <Card className={classes.card}>
           <CardContent>
-            <FormControl className={classes.select}>
-              <InputLabel id="demo-simple-select">Select a day</InputLabel>
-              {this.dayOptions()}
-            </FormControl>
-
+            <Grid xs={6}>
+              <FormControl className={classes.select}>
+                <InputLabel id="demo-simple-select">Select a day</InputLabel>
+                {this.dayOptions()}
+              </FormControl>
+            </Grid>
             <TextField
               label="From"
               name="start"

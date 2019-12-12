@@ -4,18 +4,15 @@ import PropTypes from "prop-types";
 
 import { withStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import AppBar from "@material-ui/core/AppBar";
-import Tabs from "@material-ui/core/Tabs";
-import Tab from "@material-ui/core/Tab";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
-import Box from "@material-ui/core/Box";
+import Grid from "@material-ui/core/Grid";
 
 import NavBar from "../../components/NavBar";
 
 const styles = theme => ({});
 
-export class ClientProfile extends Component {
+class ClientProfile extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -58,6 +55,7 @@ export class ClientProfile extends Component {
       return user;
     }
   };
+
   render() {
     const { classes } = this.props;
 
@@ -74,36 +72,48 @@ export class ClientProfile extends Component {
 
     return (
       <>
-        <NavBar />
+        <NavBar
+          username={parentGuardianFirstName + " " + parentGuardianLastName}
+        />
         <Container>
-          <h1>
-            {patientFirstName} {patientLastName}
-          </h1>
-          <Button
-            onClick={this.onEditProfile}
-            color="primary"
-            variant="contained"
-          >
-            Edit
-          </Button>
-          <h2>Condition</h2>
-          <p>{patientCondition}</p>
+          <Grid item xs={12}>
+            <Grid>
+              <h1>
+                {patientFirstName} {patientLastName}
+              </h1>
+              <Button
+                onClick={this.onEditProfile}
+                color="primary"
+                variant="contained"
+              >
+                Edit
+              </Button>
+            </Grid>
+            <h2>Condition</h2>
+            <p>{patientCondition}</p>
 
-          <h2>Needs</h2>
-          <p>{patientNeeds}</p>
+            <h2>Needs</h2>
+            <p>{patientNeeds}</p>
 
-          <h2>Parent/Guardian</h2>
-          <p>
-            {parentGuardianFirstName} {parentGuardianLastName}
-          </p>
+            <h2>Parent/Guardian</h2>
+            <p>
+              {parentGuardianFirstName} {parentGuardianLastName}
+            </p>
 
-          <h2>Phone</h2>
-          <p>{phoneNumber}</p>
+            <h2>Phone</h2>
+            <p>{phoneNumber}</p>
 
-          <h2>Email</h2>
-          <p>{email}</p>
+            <h2>Email</h2>
+            <p>{email}</p>
+          </Grid>
         </Container>
       </>
     );
   }
 }
+
+ClientProfile.propTypes = {
+  classes: PropTypes.object.isRequired
+};
+
+export default withStyles(styles)(ClientProfile);

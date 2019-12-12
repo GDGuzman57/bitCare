@@ -14,8 +14,8 @@ class SignUp extends Component {
 
   onClick = e =>
     e.target.value === "client"
-      ? this.props.history.push("client")
-      : this.props.history.push("service_worker");
+      ? this.props.history.push("/signup/client")
+      : this.props.history.push("/signup/service_worker");
 
   render() {
     return (

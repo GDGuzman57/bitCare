@@ -97,13 +97,6 @@ class ListServiceWorkers extends Component {
       this.props.history.push("signin");
   };
 
-  onLogout = () => {
-    if (this.props.model.Logout) {
-      this.props.model.Logout();
-      this.props.history.push("signin");
-    }
-  };
-
   onProfile = () => {
     this.props.history.push("/profile");
   };
@@ -115,12 +108,7 @@ class ListServiceWorkers extends Component {
 
     return (
       <>
-        <NavBar
-          username={this.state.username}
-          handleLogin={this.onLogin}
-          handleLogout={this.onLogout}
-          handleProfile={this.onProfile}
-        />
+        <NavBar username={this.state.username} />
         <div className="container mt-5 mb-5">
           <div className="row">
             <div className="col s1">

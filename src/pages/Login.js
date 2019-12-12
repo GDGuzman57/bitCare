@@ -72,7 +72,7 @@ class SignIn extends Component {
           this.props.history.push("/profile/service_worker"); // Go to service worker profile if "true".
         } else {
           console.log(`isServiceWorker: ${isServiceWorker}`);
-          this.props.history.push("/profile/client"); // Go to service worker profile if "false".
+          this.props.history.push("/list"); // Go to service worker profile if "false".
         }
       } else {
         console.log("From <LoginSample/>: login failed!");

@@ -19,6 +19,7 @@ password: 123456
 isServiceWorker: false
 */
 
+//
 // Takes a string as checks if it matches a safe character: ( a-z, 0-9, ., @, - )
 // Returns a bool, false if the string is safe to use, true if it is not
 Model.ExpressionIsNotSafe = expression => {

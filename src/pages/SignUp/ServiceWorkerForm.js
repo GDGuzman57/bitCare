@@ -1,22 +1,49 @@
 import React, { Component } from "react";
 
 import AvailabilityForm from "../../components/Availability/Form";
-import FullNameForm from "../../components/SignUpForms/FullNameForm";
-import EmailForm from "../../components/SignUpForms/EmailForm";
-import PhoneNumberForm from "../../components/SignUpForms/PhoneNumberForm";
-import TextAreaForm from "../../components/SignUpForms/TextAreaForm";
-import SubmitButton from "../../components/SubmitButton";
 
-import Form from "react-bootstrap/Form";
-import Container from "react-bootstrap/Container";
-import PasswordsForms from "../../components/SignUpForms/PasswordsForms";
+import PropTypes from "prop-types";
+
+import { withStyles } from "@material-ui/core/styles";
+
+import Button from "@material-ui/core/Button";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import TextField from "@material-ui/core/TextField";
+import Grid from "@material-ui/core/Grid";
+import Paper from "@material-ui/core/Paper";
+import Typography from "@material-ui/core/Typography";
+import Container from "@material-ui/core/Container";
 
 import uuid from "uuid"; // Generates a seemingly random id. Used for user sign ups.
 
-/* 
-TODO: 
-- add DOB form
-*/
+//
+// Needed to style Material-UI components.
+const styles = theme => ({
+  paper: {
+    marginTop: theme.spacing(8),
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center"
+  },
+  avatar: {
+    margin: theme.spacing(1),
+    backgroundColor: theme.palette.secondary.main
+  },
+  form: {
+    width: "100%", // Fix IE 11 issue.
+    marginTop: theme.spacing(3)
+  },
+  submit: {
+    margin: theme.spacing(3, 1, 2)
+  },
+  add: {
+    marginBottom: theme.spacing(2)
+  },
+  heading: {
+    fontSize: theme.typography.pxToRem(15),
+    fontWeight: theme.typography.fontWeightRegular
+  }
+});
 
 class SignUpServiceWorkerForm extends Component {
   constructor(props) {
@@ -32,16 +59,14 @@ class SignUpServiceWorkerForm extends Component {
       password: "",
       passwordConfirm: "",
       aboutMe: "",
-      availability: [],
-      isCertified: null
+      availability: []
     };
   }
 
   //
   // CALLBACK FUNCTIONS
   //
-
-  onAvailabilitySubmit = value => {
+  onAvailabilitySubmit = async value => {
     let availabilityList = this.state.availability.concat(value);
 
     this.setState({
@@ -63,6 +88,7 @@ class SignUpServiceWorkerForm extends Component {
       isServiceWorker,
       email,
       passwordOne,
+      passwordTwo,
       phoneNumber,
       aboutMe,
       availability
@@ -81,51 +107,169 @@ class SignUpServiceWorkerForm extends Component {
       password: passwordOne,
       phoneNumber: phoneNumber,
       aboutMe: aboutMe,
-      availability: availability,
-      isCertified: true
+      availability: availability
     };
 
     //
     // Invokes the model's CreateUser function.
-    if (this.props.model.CreateUser) this.props.model.CreateUser(user);
+    if (this.props.model.CreateUser && passwordOne === passwordTwo) {
+      this.props.model.CreateUser(user);
+
+      if (this.props.model.Login) {
+        this.props.model.Login(email, passwordOne);
+        sessionStorage.setItem("id", id);
+        sessionStorage.setItem("isLoggedIn", true);
+        sessionStorage.setItem("isServiceWorker", this.state.isServiceWorker);
+        this.props.history.replace("/splash");
+      }
+    } else {
+      console.log("One of the forms is invalid!");
+    }
   };
 
   render() {
+    const { classes } = this.props;
+
+    const {
+      firstName,
+      lastName,
+      email,
+      passwordOne,
+      passwordTwo,
+      phoneNumber,
+      aboutMe
+    } = this.state;
+
     return (
-      <Container className="border border-dark w-100 rounded-sm">
-        <Form className="mt-3">
-          <Form.Row>
-            <FullNameForm onChange={this.onChange} />
-          </Form.Row>
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <div className={classes.paper}>
+          <Typography component="h1" variant="h5">
+            Sign Up: Service Worker
+          </Typography>
+          <form className={classes.form}>
+            <Grid container spacing={2}>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  onChange={this.onChange}
+                  name="firstName"
+                  variant="outlined"
+                  fullWidth
+                  id="firstName"
+                  label="First Name"
+                  autoFocus
+                  value={firstName}
+                />
+              </Grid>
 
-          <Form.Row>
-            <PhoneNumberForm onChange={this.onChange} />
-            <EmailForm onChange={this.onChange} />
-            <PasswordsForms onChange={this.onChange} />
-          </Form.Row>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  name="lastName"
+                  variant="outlined"
+                  fullWidth
+                  id="lastName"
+                  label="Last Name"
+                  autoFocus
+                  value={lastName}
+                  onChange={this.onChange}
+                />
+              </Grid>
 
-          <Form.Row>
-            <TextAreaForm
-              onChange={this.onChange}
-              label={"About me"}
-              placeholder={"Tell us about yourself..."}
-              name="aboutMe"
-            />
-          </Form.Row>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  name="email"
+                  variant="outlined"
+                  fullWidth
+                  id="email"
+                  label="Email"
+                  autoFocus
+                  value={email}
+                  onChange={this.onChange}
+                />
+              </Grid>
 
-          <AvailabilityForm
-            handleSubmit={this.onAvailabilitySubmit}
-            list={this.getList}
-            includeTable={true}
-            buttonText="Add"
-          />
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  name="phoneNumber"
+                  variant="outlined"
+                  fullWidth
+                  id="phoneNumber"
+                  label="Phone Number"
+                  autoFocus
+                  value={phoneNumber}
+                  onChange={this.onChange}
+                />
+              </Grid>
 
-          <Form.Row className="justify-content-md-center">
-            <SubmitButton onClick={this.onFormSubmit} text={"Register"} />
-          </Form.Row>
-        </Form>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  name="passwordOne"
+                  variant="outlined"
+                  fullWidth
+                  id="passwordOne"
+                  label="Password"
+                  autoFocus
+                  value={passwordOne}
+                  onChange={this.onChange}
+                  type="password"
+                />
+              </Grid>
+
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  name="passwordTwo"
+                  variant="outlined"
+                  fullWidth
+                  id="passwordTwo"
+                  label="Confirm Password"
+                  autoFocus
+                  value={passwordTwo}
+                  onChange={this.onChange}
+                  type="password"
+                />
+              </Grid>
+
+              <Grid item xs={12}>
+                <TextField
+                  name="aboutMe"
+                  variant="outlined"
+                  fullWidth
+                  id="aboutMe"
+                  label="Tell us about yourself..."
+                  autoFocus
+                  value={aboutMe}
+                  multiline
+                  rows="4"
+                  onChange={this.onChange}
+                />
+              </Grid>
+
+              <AvailabilityForm
+                handleSubmit={this.onAvailabilitySubmit}
+                list={this.getList}
+                includeTable={true}
+                buttonText="Add"
+              />
+
+              <Button
+                color="primary"
+                fullWidth
+                variant="contained"
+                onClick={this.onFormSubmit}
+                className={classes.submit}
+              >
+                Register
+              </Button>
+            </Grid>
+          </form>
+        </div>
       </Container>
     );
   }
 }
-export default SignUpServiceWorkerForm;
+
+SignUpServiceWorkerForm.propTypes = {
+  classes: PropTypes.object.isRequired
+};
+
+export default withStyles(styles)(SignUpServiceWorkerForm);
