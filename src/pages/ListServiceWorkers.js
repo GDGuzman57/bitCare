@@ -6,6 +6,7 @@ import NavBar from "../components/NavBar";
 import PropTypes from "prop-types";
 
 import { withStyles } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
 
 //
 // MATERIAL-UI REQUIREMENT #1: tweak or add values here to apply styles to a Material-UI component.
@@ -109,9 +110,13 @@ class ListServiceWorkers extends Component {
     return (
       <>
         <NavBar username={this.state.username} />
+
         <div className="container mt-5 mb-5">
           <div className="row">
             <div className="col s1">
+              <Typography variant="h4" gutterBottom>
+                Find a service worker
+              </Typography>
               <AvailabilityForm
                 buttonText="Filter"
                 onGetBlock={this.renderInWorkerCards}

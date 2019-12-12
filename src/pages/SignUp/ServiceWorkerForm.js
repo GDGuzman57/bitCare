@@ -66,11 +66,38 @@ class SignUpServiceWorkerForm extends Component {
   //
   // CALLBACK FUNCTIONS
   //
-  onAvailabilitySubmit = async value => {
-    let availabilityList = this.state.availability.concat(value);
+  //
+  // Adds to the worker's list of availabilities.
+  onAddRow = value => {
+    const timeBlock = {
+      blockId: uuid(),
+      day: value[0]["day"],
+      start: value[0]["start"],
+      end: value[0]["end"]
+    };
+
+    let availabilityList = this.state.availability.concat(timeBlock);
 
     this.setState({
       availability: availabilityList // FIXME: check for duplicate time blocks.
+    });
+
+    console.log("From ServiceWorkerEditProfile: ", timeBlock);
+  };
+
+  onDeleteRow = value => {
+    //
+    // Creates a new array from the current array and filters out any
+    // objects from the current array that DO NOT contain the same value
+    // that is same as "value". For example: if an object in "availability"
+    // has an id of 2, and what came back from "value" is also 2, then objects with
+    // an id of 1 and 3 are included in the new array.
+    const filteredArray = this.state.availability.filter(
+      block => block.blockId !== value
+    );
+
+    this.setState({
+      availability: filteredArray
     });
   };
 
@@ -245,7 +272,8 @@ class SignUpServiceWorkerForm extends Component {
               </Grid>
 
               <AvailabilityForm
-                handleSubmit={this.onAvailabilitySubmit}
+                handleSubmit={this.onAddRow}
+                handleDelete={this.onDeleteRow}
                 list={this.getList}
                 includeTable={true}
                 buttonText="Add"
