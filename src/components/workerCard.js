@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 
+import { withRouter } from "react-router-dom";
+
 import PropTypes from "prop-types";
 
 import { withStyles } from "@material-ui/core/styles";
@@ -47,6 +49,11 @@ class WorkerCard extends Component {
     console.log("placeholder function");
   };
 
+  readProfile = () =>
+    this.props.history.push(
+      `/profile/${this.props.worker.firstName}_${this.props.worker.lastName}`
+    );
+
   render() {
     //
     // Needed for Material-UI styling
@@ -57,9 +64,15 @@ class WorkerCard extends Component {
         <Card className={classes.card}>
           <CardContent>
             <Typography gutterBottom component="h5" align="center">
-              <a href="#">
-                {this.props.worker.firstName} {this.props.worker.lastName}
-              </a>
+              <Button>
+                <Typography
+                  variant="h6"
+                  color="primary"
+                  onClick={this.readProfile}
+                >
+                  {this.props.worker.firstName} {this.props.worker.lastName}
+                </Typography>
+              </Button>
             </Typography>
             <Typography
               variant="body2"
@@ -90,4 +103,4 @@ class WorkerCard extends Component {
 WorkerCard.propTypes = {
   classes: PropTypes.object.isRequired
 };
-export default withStyles(styles)(WorkerCard);
+export default withStyles(styles)(withRouter(WorkerCard));

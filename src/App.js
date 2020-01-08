@@ -9,7 +9,7 @@ import {
 
 import SignUpClientForm from "./pages/SignUp/ClientForm";
 import ListServiceWorkers from "./pages/ListServiceWorkers";
-import SignIn from "./pages/Login";
+import SignIn from "./pages/SignIn";
 
 // Pages to render when signing up.
 import SignUpServiceWorkerForm from "./pages/SignUp/ServiceWorkerForm";
@@ -18,8 +18,8 @@ import Paths from "./pages/SignUp/Paths";
 // Pages to render when signed in.
 import ServiceWorkerProfile from "./pages/Profile/ServiceWorkerProfile";
 import ClientProfile from "./pages/Profile/ClientProfile";
-import ServiceWorkerEditProfile from "./pages/Profile/ServiceWorkerEditProfile";
-import ClientEditProfile from "./pages/Profile/ClientEditProfile";
+import ServiceWorkerEditProfile from "./pages/Profile/Edit/ServiceWorkerEditProfile";
+import ClientEditProfile from "./pages/Profile/Edit/ClientEditProfile";
 
 import Splash from "./pages/Splash";
 

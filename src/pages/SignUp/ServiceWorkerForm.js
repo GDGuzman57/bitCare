@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import AvailabilityForm from "../../components/Availability/Form";
+import AvailabilityForm from "../../components/Availability/AvailabilityForm";
 
 import PropTypes from "prop-types";
 

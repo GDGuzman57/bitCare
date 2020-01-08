@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import WorkerCard from "../components/workerCard.js";
-import AvailabilityForm from "../components/Availability/Form";
+import WorkerCard from "../components/WorkerCard.js";
+import AvailabilityForm from "../components/Availability/AvailabilityForm";
 import NavBar from "../components/NavBar";
 
 import PropTypes from "prop-types";

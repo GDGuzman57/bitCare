@@ -1,5 +1,4 @@
 import { observable } from "mobx";
-import uuid from "uuid"; // Generates a seemingly random id. Used for user sign ups.
 
 export const Model = observable({ username: null });
 
@@ -98,7 +97,7 @@ Model.Logout = function() {
 };
 
 //
-// Login function that creates a items in the browser's session storage.
+// Login function that creates items in the browser's session storage.
 Model.Login = async function(email, password) {
   let fetchData, reply, data;
 
@@ -123,7 +122,7 @@ Model.Login = async function(email, password) {
 
     //
     // Returns true if email and password are valid. Store's the users "id", "isServiceWorker", and "isLoggedIn" values
-    // as session storage items.
+    // in the session storage
     const isUser = await data.some(user => {
       if (user.email === email && user.password === password) {
         console.log("From Model: login successful!");
@@ -166,7 +165,7 @@ Model.TimeToSeconds = function(time) {
 
   // Converts each string in array to number.
   let seconds = +array[0] * 60 * 60 + +array[1] * 60 + +array[2];
-
+  console.log(seconds);
   return seconds;
 };
 
